@@ -18,7 +18,7 @@ export default defineConfig({
       projectId: PUBLIC_SANITY_PROJECT_ID || 'dummy-project-id',
       dataset: PUBLIC_SANITY_DATASET || 'production',
       studioBasePath: '/admin',
-      useCdn: true,
+      useCdn: false,
     }),
   ],
 });

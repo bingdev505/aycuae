@@ -13,14 +13,22 @@ const seoQuery = `*[_type == "siteSettings"][0]{
   siteTitle,
   metaDescription,
   metaKeywords,
-  ogImage
+  ogImage,
+  googleAnalyticsId,
+  metaPixelId,
+  customHeaderScripts,
+  customBodyScripts
 }`;
 
 const defaultSeo = {
   siteTitle: 'ConstX | Premium Construction, Renovation & Building Contractor',
   metaDescription: 'ConstX is a premium, modern construction, renovation, and building contractor offering high-quality structural and design solutions.',
   metaKeywords: 'construction, renovation, builder, architect, design, contractor, engineering',
-  ogImage: null
+  ogImage: null,
+  googleAnalyticsId: null,
+  metaPixelId: null,
+  customHeaderScripts: null,
+  customBodyScripts: null
 };
 
 const seo = await querySanity(seoQuery, defaultSeo);
@@ -68,8 +76,50 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site || 'https://aycuae.p
     
     <!-- Swiper CSS (CDN) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <!-- Google Analytics Integration -->
+    {seo.googleAnalyticsId && (
+      <>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${seo.googleAnalyticsId}`}></script>
+        <script is:inline define:vars={{ gaId: seo.googleAnalyticsId }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', gaId);
+        </script>
+      </>
+    )}
+
+    <!-- Meta (Facebook) Pixel Integration -->
+    {seo.metaPixelId && (
+      <script is:inline define:vars={{ pixelId: seo.metaPixelId }}>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', pixelId);
+        fbq('track', 'PageView');
+      </script>
+    )}
+
+    <!-- Custom Header Scripts Dynamic Integration -->
+    {seo.customHeaderScripts && <Fragment set:html={seo.customHeaderScripts} />}
   </head>
   <body>
+    <!-- Meta Pixel NoScript Fallback -->
+    {seo.metaPixelId && (
+      <noscript>
+        <img height="1" width="1" style="display:none" src={`https://www.facebook.com/tr?id=${seo.metaPixelId}&ev=PageView&noscript=1`} />
+      </noscript>
+    )}
+
+    <!-- Custom Body Scripts Dynamic Integration -->
+    {seo.customBodyScripts && <Fragment set:html={seo.customBodyScripts} />}
+
     <Header />
     <main>
       <slot />

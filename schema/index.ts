@@ -23,6 +23,11 @@ export const siteSettings = defineType({
     defineField({ name: 'metaDescription', title: 'Meta Description (SEO)', type: 'text', description: 'A brief summary of your site for search engines' }),
     defineField({ name: 'metaKeywords', title: 'Meta Keywords (SEO)', type: 'string', description: 'Comma-separated keywords for search engines' }),
     defineField({ name: 'ogImage', title: 'Open Graph Image (Social Sharing)', type: 'image', description: 'Image shown when sharing the site on Facebook/Twitter' }),
+    // Marketing & Tracking Integrations (WordPress style)
+    defineField({ name: 'googleAnalyticsId', title: 'Google Analytics Measurement ID', type: 'string', description: 'e.g., G-XXXXXXXXXX' }),
+    defineField({ name: 'metaPixelId', title: 'Meta Pixel ID', type: 'string', description: 'e.g., 123456789012345' }),
+    defineField({ name: 'customHeaderScripts', title: 'Custom Header Scripts (Inside <head>)', type: 'text', description: 'Paste custom HTML tags here (e.g. Google Tag Manager, custom styles, verification tags)' }),
+    defineField({ name: 'customBodyScripts', title: 'Custom Body Scripts (Inside <body>)', type: 'text', description: 'Paste custom HTML tags here (e.g. Facebook Pixel fallback noscript, chat widgets, body analytics)' }),
   ],
 });
 

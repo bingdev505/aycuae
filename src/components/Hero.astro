@@ -1,0 +1,192 @@
+---
+import { querySanity, urlFor } from '../utils/sanity';
+
+const heroSlidesQuery = `*[_type == "heroSlide"]{
+  subtitle,
+  title,
+  description,
+  buttonText,
+  buttonUrl,
+  bgImage
+}`;
+
+const defaultSlides = [
+  {
+    subtitle: 'Welcome to ConstX',
+    title: 'We Build Modern Masterpieces',
+    description: 'Professional engineering and contracting services for premium projects. Leading structural standards for modern buildings.',
+    buttonText: 'Our Services',
+    buttonUrl: '#services',
+    bgImage: null
+  },
+  {
+    subtitle: 'Certified Professionals',
+    title: 'Transforming Spaces & Lives',
+    description: 'From home renovation to corporate skyscrapers, we bring design dreams into reality with premium materials and expertise.',
+    buttonText: 'View Projects',
+    buttonUrl: '#projects',
+    bgImage: null
+  }
+];
+
+const slides = await querySanity(heroSlidesQuery, defaultSlides);
+---
+
+<section class="hero-section">
+  <!-- Swiper container -->
+  <div class="swiper hero-swiper">
+    <div class="swiper-wrapper">
+      {slides.map((slide) => {
+        const bgUrl = slide.bgImage ? urlFor(slide.bgImage) : 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1920&q=80';
+        return (
+          <div class="swiper-slide" style={`background-image: linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.75)), url(${bgUrl});`}>
+            <div class="container hero-content">
+              <span class="hero-subtitle">{slide.subtitle}</span>
+              <h1 class="hero-title">{slide.title}</h1>
+              <p class="hero-description">{slide.description}</p>
+              <div class="hero-buttons">
+                <a href={slide.buttonUrl} class="btn btn-primary">{slide.buttonText}</a>
+                <a href="#contact" class="btn btn-outline">Contact Us</a>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+    
+    <!-- Controls -->
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-pagination"></div>
+  </div>
+</section>
+
+<style>
+  .hero-section {
+    position: relative;
+    width: 100%;
+    height: 700px;
+    background-color: var(--color-secondary);
+    overflow: hidden;
+  }
+
+  .hero-swiper {
+    width: 100%;
+    height: 100%;
+  }
+
+  .swiper-slide {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    color: white;
+    max-width: 800px;
+    z-index: 10;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s forwards 0.2s;
+  }
+
+  /* Swiper active slide animations */
+  .swiper-slide-active .hero-content {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .hero-subtitle {
+    font-family: var(--font-heading);
+    color: var(--color-primary);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 3px;
+    margin-bottom: 16px;
+    display: inline-block;
+  }
+
+  .hero-title {
+    font-size: 56px;
+    font-weight: 800;
+    margin-bottom: 24px;
+    line-height: 1.1;
+  }
+
+  .hero-description {
+    font-size: 18px;
+    color: var(--text-muted-light);
+    margin-bottom: 36px;
+    line-height: 1.6;
+    max-width: 600px;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 16px;
+  }
+
+  @media (max-width: 768px) {
+    .hero-section {
+      height: 550px;
+    }
+
+    .hero-title {
+      font-size: 38px;
+    }
+
+    .hero-description {
+      font-size: 15px;
+      margin-bottom: 24px;
+    }
+
+    .hero-buttons {
+      flex-direction: column;
+      width: 100%;
+      max-width: 280px;
+    }
+    
+    .btn {
+      text-align: center;
+      justify-content: center;
+    }
+  }
+</style>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    new Swiper('.hero-swiper', {
+      loop: true,
+      autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      effect: 'fade',
+      fadeEffect: {
+        crossFade: true
+      }
+    });
+  });
+</script>

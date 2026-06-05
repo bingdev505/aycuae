@@ -1,0 +1,129 @@
+---
+const steps = [
+  {
+    number: '01',
+    title: 'Architectural Plan',
+    description: 'We draft blueprints and create detailed 3D models to visually map the layout.'
+  },
+  {
+    number: '02',
+    title: 'Cost Estimation',
+    description: 'We calculate material expenses, hiring rates, and set a fixed optimized budget.'
+  },
+  {
+    number: '03',
+    title: 'Build Execution',
+    description: 'Our certified builders perform core structural work adhering to security protocols.'
+  },
+  {
+    number: '04',
+    title: 'Client Handover',
+    description: 'We run detailed checks, tidy up the site, and officially deliver the keys.'
+  }
+];
+---
+
+<section class="section process-section">
+  <div class="container">
+    <div class="section-title-wrapper">
+      <span class="section-subtitle">Our Execution Path</span>
+      <h2 class="section-title">How We Build Projects</h2>
+    </div>
+
+    <div class="grid grid-4 process-grid">
+      {steps.map((step, index) => (
+        <div class="process-step">
+          <div class="step-num-wrapper">
+            <span class="step-num">{step.number}</span>
+            {index < steps.length - 1 && <div class="step-line hidden-tablet"></div>}
+          </div>
+          <h3 class="step-title">{step.title}</h3>
+          <p class="step-desc">{step.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .process-section {
+    background-color: var(--bg-light);
+  }
+
+  .process-grid {
+    margin-top: 40px;
+  }
+
+  .process-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+  }
+
+  .step-num-wrapper {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: var(--bg-light-card);
+    border: 2px dashed var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    transition: var(--transition-smooth);
+    z-index: 5;
+  }
+
+  .step-num {
+    font-family: var(--font-heading);
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--color-primary);
+  }
+
+  .process-step:hover .step-num-wrapper {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+  }
+
+  .process-step:hover .step-num {
+    color: white;
+  }
+
+  .step-line {
+    position: absolute;
+    top: 50%;
+    left: 80px;
+    width: calc(100% + 24px - 80px);
+    height: 2px;
+    border-top: 2px dashed rgba(21, 128, 61, 0.3);
+    transform: translateY(-50%);
+    z-index: 1;
+  }
+
+  .step-title {
+    font-family: var(--font-heading);
+    font-size: 18px;
+    color: var(--color-secondary);
+    margin-bottom: 12px;
+  }
+
+  .step-desc {
+    color: var(--text-muted-dark);
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 0 10px;
+  }
+
+  @media (max-width: 1024px) {
+    .hidden-tablet {
+      display: none !important;
+    }
+    .process-grid {
+      gap: 40px;
+    }
+  }
+</style>

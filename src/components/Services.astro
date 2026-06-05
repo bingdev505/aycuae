@@ -1,0 +1,192 @@
+---
+import { querySanity, urlFor } from '../utils/sanity';
+
+const servicesQuery = `*[_type == "service"]{
+  title,
+  "slug": slug.current,
+  description,
+  icon,
+  image
+}`;
+
+const defaultServices = [
+  {
+    title: 'General Contracting',
+    slug: 'general-contracting',
+    description: 'A-to-Z construction project management, permitting, subcontracting, and safety execution.',
+    icon: '🏗️',
+    image: null
+  },
+  {
+    title: 'Building Architecture',
+    slug: 'building-architecture',
+    description: 'Creative and modern structural drafts, blueprints, and architectural engineering blueprints.',
+    icon: '📐',
+    image: null
+  },
+  {
+    title: 'Interior Design',
+    slug: 'interior-design',
+    description: 'Bespoke custom layouts, premium furniture mapping, lighting aesthetics, and finishes.',
+    icon: '✨',
+    image: null
+  },
+  {
+    title: 'House Renovation',
+    slug: 'house-renovation',
+    description: 'Modern room additions, kitchen modeling, bathroom repairs, and full house remodeling.',
+    icon: '🔨',
+    image: null
+  },
+  {
+    title: 'Metal Roofing',
+    slug: 'metal-roofing',
+    description: 'Highly durable weather-resistant metallic roof structures, insulation, and repair works.',
+    icon: '🏠',
+    image: null
+  },
+  {
+    title: 'Property Maintenance',
+    slug: 'property-maintenance',
+    description: 'Routine structural integrity checks, electrical audits, plumbing, and wear-and-tear fixes.',
+    icon: '🔧',
+    image: null
+  }
+];
+
+const services = await querySanity(servicesQuery, defaultServices);
+---
+
+<section class="section services-section" id="services">
+  <div class="container">
+    <div class="section-title-wrapper">
+      <span class="section-subtitle">What We Do</span>
+      <h2 class="section-title">Our Premium Services</h2>
+    </div>
+
+    <div class="grid grid-3 services-grid">
+      {services.map((service) => {
+        const bgUrl = service.image ? urlFor(service.image) : 'https://images.unsplash.com/photo-1581094288338-2314dddb7ecc?auto=format&fit=crop&w=400&q=80';
+        return (
+          <div class="service-card">
+            <div class="card-image">
+              <img src={bgUrl} alt={service.title} />
+              <div class="icon-badge">{service.icon || '🏗️'}</div>
+            </div>
+            <div class="card-body">
+              <h3 class="service-title">{service.title}</h3>
+              <p class="service-desc">{service.description}</p>
+              <a href={`#contact`} class="read-more-link">
+                Request Service <span>→</span>
+              </a>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<style>
+  .services-section {
+    background-color: var(--bg-light-card);
+  }
+
+  .services-grid {
+    margin-top: 20px;
+  }
+
+  .service-card {
+    background-color: var(--bg-light);
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+    transition: var(--transition-smooth);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--box-shadow-premium);
+  }
+
+  .card-image {
+    position: relative;
+    height: 200px;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition-smooth);
+  }
+
+  .service-card:hover .card-image img {
+    transform: scale(1.1);
+  }
+
+  .icon-badge {
+    position: absolute;
+    bottom: -20px;
+    left: 24px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--color-primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    box-shadow: 0 4px 15px rgba(21, 128, 61, 0.4);
+    z-index: 5;
+  }
+
+  .card-body {
+    padding: 36px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .service-title {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    color: var(--color-secondary);
+    margin-bottom: 12px;
+  }
+
+  .service-desc {
+    color: var(--text-muted-dark);
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex-grow: 1;
+  }
+
+  .read-more-link {
+    color: var(--color-primary);
+    font-weight: 600;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    align-self: flex-start;
+  }
+
+  .read-more-link span {
+    transition: var(--transition-smooth);
+  }
+
+  .service-card:hover .read-more-link span {
+    transform: translateX(4px);
+  }
+
+  .service-card:hover .read-more-link {
+    color: var(--color-primary-hover);
+  }
+</style>

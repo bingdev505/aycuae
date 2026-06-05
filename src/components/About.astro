@@ -1,0 +1,335 @@
+---
+import { querySanity, urlFor } from '../utils/sanity';
+
+const aboutSectionQuery = `*[_type == "aboutSection"][0]{
+  badgeTitle,
+  badgeSubtitle,
+  title,
+  description,
+  featuresList,
+  youtubeUrl,
+  image
+}`;
+
+const defaultAbout = {
+  badgeTitle: '30+',
+  badgeSubtitle: 'Years of Experience',
+  title: 'We are Professional Builders and Contractors since 1996',
+  description: 'With over three decades of building and construction engineering experience, we design and construct residential, commercial, and industrial facilities. We pride ourselves on engineering safety, building durability, and premium finishes.',
+  featuresList: [
+    'Certified structural engineers & planners',
+    'Premium quality raw materials and modern tools',
+    'Accurate blueprints and cost estimation',
+    'On-time delivery and strict adherence to deadlines'
+  ],
+  youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+  image: null
+};
+
+const about = await querySanity(aboutSectionQuery, defaultAbout);
+const imageUrl = about.image ? urlFor(about.image) : 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80';
+---
+
+<section class="section about-section" id="about">
+  <div class="container about-grid">
+    <!-- Image & Video Column -->
+    <div class="image-col">
+      <div class="image-wrapper">
+        <img src={imageUrl} alt="About Construction" />
+        
+        <!-- Experience Badge -->
+        <div class="experience-badge">
+          <span class="badge-num">{about.badgeTitle}</span>
+          <span class="badge-text">{about.badgeSubtitle}</span>
+        </div>
+
+        <!-- Video Trigger -->
+        <a href={about.youtubeUrl} target="_blank" class="video-play-btn" aria-label="Play Video">
+          <span class="play-icon">▶</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Text & Accordion Column -->
+    <div class="text-col">
+      <span class="section-subtitle">About Our Company</span>
+      <h2 class="section-title">{about.title}</h2>
+      <p class="about-desc">{about.description}</p>
+
+      <!-- Bulleted list -->
+      <ul class="features-list">
+        {about.featuresList.map((feature: string) => (
+          <li>
+            <span class="check-icon">✓</span>
+            {feature}
+          </li>
+        ))}
+      </ul>
+
+      <!-- Interactive Accordion -->
+      <div class="accordion">
+        <div class="accordion-item active">
+          <button class="accordion-header">
+            <span>Our Professional Mission</span>
+            <span class="acc-icon">+</span>
+          </button>
+          <div class="accordion-body">
+            <p>Our mission is to lead the building contractor industry with high safety standards, state-of-the-art architectures, and transparent pricing.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header">
+            <span>Eco-Friendly Engineering Standards</span>
+            <span class="acc-icon">+</span>
+          </button>
+          <div class="accordion-body">
+            <p>We actively utilize eco-friendly construction materials and sustainable energy architectures to reduce environmental footprints.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header">
+            <span>Guaranteed Quality Assurance</span>
+            <span class="acc-icon">+</span>
+          </button>
+          <div class="accordion-body">
+            <p>Every phase of construction undergoes double-layer quality audits from external certified engineers to guarantee safety.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-section {
+    background-color: var(--bg-light);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  @media (max-width: 1024px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+
+  /* Image Column */
+  .image-col {
+    position: relative;
+  }
+
+  .image-wrapper {
+    position: relative;
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    box-shadow: var(--box-shadow-premium);
+  }
+
+  .image-wrapper img {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .experience-badge {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    background-color: var(--color-primary);
+    color: white;
+    padding: 24px 30px;
+    border-radius: var(--border-radius-md);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10;
+  }
+
+  .badge-num {
+    font-family: var(--font-heading);
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .badge-text {
+    font-size: 13px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-align: center;
+  }
+
+  .video-play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    transition: var(--transition-smooth);
+  }
+
+  .video-play-btn:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+    background-color: var(--color-accent);
+    color: white;
+  }
+
+  .play-icon {
+    font-size: 24px;
+    color: var(--color-primary);
+    margin-left: 4px;
+  }
+
+  .video-play-btn:hover .play-icon {
+    color: white;
+  }
+
+  /* Text Column */
+  .text-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .section-subtitle {
+    align-self: flex-start;
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    margin-bottom: 20px;
+    text-align: left;
+  }
+
+  .about-desc {
+    color: var(--text-muted-dark);
+    font-size: 16px;
+    margin-bottom: 24px;
+  }
+
+  .features-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 30px;
+  }
+
+  .features-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--color-secondary);
+  }
+
+  .check-icon {
+    color: var(--color-primary);
+    font-weight: 900;
+    font-size: 16px;
+  }
+
+  /* Accordion styling */
+  .accordion {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .accordion-item {
+    background-color: var(--bg-light-card);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: var(--border-radius-sm);
+    overflow: hidden;
+  }
+
+  .accordion-header {
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-secondary);
+    cursor: pointer;
+    text-align: left;
+    transition: var(--transition-smooth);
+  }
+
+  .accordion-header:hover {
+    color: var(--color-primary);
+  }
+
+  .accordion-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    padding: 0 20px;
+  }
+
+  .accordion-body p {
+    font-size: 14px;
+    color: var(--text-muted-dark);
+    padding-bottom: 16px;
+  }
+
+  .acc-icon {
+    font-size: 18px;
+    font-weight: 400;
+    transition: var(--transition-smooth);
+  }
+
+  .accordion-item.active .acc-icon {
+    transform: rotate(45deg);
+  }
+
+  .accordion-item.active .accordion-body {
+    max-height: 100px;
+  }
+</style>
+
+<script>
+  const accordionHeaders = document.querySelectorAll('.accordion-header');
+  accordionHeaders.forEach(header => {
+    header.addEventListener('click', () => {
+      const currentItem = header.parentElement;
+      const isActive = currentItem?.classList.contains('active');
+      
+      // Close all accordion items
+      document.querySelectorAll('.accordion-item').forEach(item => {
+        item.classList.remove('active');
+      });
+
+      // Open clicked item if it wasn't active
+      if (!isActive && currentItem) {
+        currentItem.classList.add('active');
+      }
+    });
+  });
+</script>

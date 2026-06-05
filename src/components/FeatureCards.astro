@@ -1,0 +1,125 @@
+---
+import { querySanity } from '../utils/sanity';
+
+const featureCardsQuery = `*[_type == "featureCard"]{
+  title,
+  description,
+  icon,
+  colorStyle
+}`;
+
+const defaultCards = [
+  {
+    title: 'Smart Planning',
+    description: 'We plan and draft every detail to minimize resource waste and deliver on time.',
+    icon: '📐',
+    colorStyle: 'orange'
+  },
+  {
+    title: 'Professional Building',
+    description: 'Expert structural and architectural builders handling heavy-duty industrial works.',
+    icon: '🏗️',
+    colorStyle: 'green'
+  },
+  {
+    title: 'Quality Renovation',
+    description: 'Bespoke designs and premium interior finishes for homes and corporate spaces.',
+    icon: '🏠',
+    colorStyle: 'blue'
+  }
+];
+
+const cards = await querySanity(featureCardsQuery, defaultCards);
+---
+
+<section class="features-section">
+  <div class="container features-grid">
+    {cards.map((card) => (
+      <div class={`feature-card border-${card.colorStyle}`}>
+        <div class={`icon-wrapper bg-${card.colorStyle}`}>
+          <span class="icon">{card.icon}</span>
+        </div>
+        <h3 class="card-title">{card.title}</h3>
+        <p class="card-description">{card.description}</p>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .features-section {
+    position: relative;
+    z-index: 20;
+    margin-top: -80px; /* Overlap Hero banner */
+    padding-bottom: 40px;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+
+  @media (max-width: 1024px) {
+    .features-grid {
+      grid-template-columns: 1fr;
+      margin-top: 0;
+    }
+    .features-section {
+      margin-top: 20px;
+    }
+  }
+
+  .feature-card {
+    background-color: var(--bg-light-card);
+    padding: 40px 30px;
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--box-shadow-premium);
+    transition: var(--transition-smooth);
+    border-bottom: 4px solid transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-10px);
+  }
+
+  .icon-wrapper {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--border-radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+
+  .icon {
+    font-size: 32px;
+  }
+
+  .card-title {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    color: var(--color-secondary);
+    margin-bottom: 16px;
+  }
+
+  .card-description {
+    font-size: 15px;
+    color: var(--text-muted-dark);
+    line-height: 1.6;
+  }
+
+  /* Color Accent Styles */
+  .bg-orange { background-color: rgba(249, 115, 22, 0.1); color: var(--color-accent); }
+  .border-orange { border-bottom-color: var(--color-accent); }
+  
+  .bg-green { background-color: rgba(21, 128, 61, 0.1); color: var(--color-primary); }
+  .border-green { border-bottom-color: var(--color-primary); }
+  
+  .bg-blue { background-color: rgba(15, 23, 42, 0.1); color: #0284c7; }
+  .border-blue { border-bottom-color: #0284c7; }
+</style>

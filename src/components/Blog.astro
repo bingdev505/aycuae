@@ -1,0 +1,181 @@
+---
+import { querySanity, urlFor } from '../utils/sanity';
+
+const blogQuery = `*[_type == "post"] | order(publishDate desc)[0..2]{
+  title,
+  "slug": slug.current,
+  publishDate,
+  excerpt,
+  coverImage
+}`;
+
+const defaultPosts = [
+  {
+    title: 'Top 5 Material Selection Standards for Heavy Building Projects',
+    slug: 'top-material-standards',
+    publishDate: '2026-06-01',
+    excerpt: 'Selecting materials for building is crucial. Learn the top structural criteria to inspect for durable safety standards.',
+    coverImage: null
+  },
+  {
+    title: 'Minimalist Interior Design Trends to Revitalize Modern Living Rooms',
+    slug: 'minimalist-interior-design-trends',
+    publishDate: '2026-05-28',
+    excerpt: 'Reimagine space using glass, metallic layouts, and ambient lights to give an open-concept premium look.',
+    coverImage: null
+  },
+  {
+    title: 'Why Quality Auditing Prevents Structural Leaks in Commercial Pools',
+    slug: 'quality-audits-leaks',
+    publishDate: '2026-05-15',
+    excerpt: 'Cracks and moisture leaks are costly. Read our comprehensive guide on engineering barriers and proof testing.',
+    coverImage: null
+  }
+];
+
+const posts = await querySanity(blogQuery, defaultPosts);
+
+function formatDate(dateStr: string) {
+  try {
+    const d = new Date(dateStr);
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  } catch (e) {
+    return dateStr;
+  }
+}
+---
+
+<section class="section blog-section" id="blog">
+  <div class="container">
+    <div class="section-title-wrapper">
+      <span class="section-subtitle">Articles & News</span>
+      <h2 class="section-title">Latest Construction Guides</h2>
+    </div>
+
+    <div class="grid grid-3 blog-grid">
+      {posts.map((post) => {
+        const coverUrl = post.coverImage ? urlFor(post.coverImage) : 'https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=400&q=80';
+        return (
+          <article class="blog-card">
+            <div class="card-image">
+              <img src={coverUrl} alt={post.title} />
+              <span class="date-badge">{formatDate(post.publishDate)}</span>
+            </div>
+            <div class="card-body">
+              <h3 class="post-title"><a href={`#contact`}>{post.title}</a></h3>
+              <p class="post-excerpt">{post.excerpt}</p>
+              <a href={`#contact`} class="read-more">
+                Read Article <span>→</span>
+              </a>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<style>
+  .blog-section {
+    background-color: var(--bg-light);
+  }
+
+  .blog-grid {
+    margin-top: 20px;
+  }
+
+  .blog-card {
+    background-color: var(--bg-light-card);
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+    transition: var(--transition-smooth);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .blog-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--box-shadow-premium);
+  }
+
+  .card-image {
+    position: relative;
+    height: 220px;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition-smooth);
+  }
+
+  .blog-card:hover .card-image img {
+    transform: scale(1.05);
+  }
+
+  .date-badge {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: var(--color-primary);
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: var(--border-radius-sm);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  }
+
+  .card-body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .post-title {
+    font-family: var(--font-heading);
+    font-size: 18px;
+    color: var(--color-secondary);
+    margin-bottom: 12px;
+    line-height: 1.4;
+  }
+
+  .post-title a:hover {
+    color: var(--color-primary);
+  }
+
+  .post-excerpt {
+    color: var(--text-muted-dark);
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex-grow: 1;
+  }
+
+  .read-more {
+    color: var(--color-primary);
+    font-weight: 600;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    align-self: flex-start;
+  }
+
+  .read-more span {
+    transition: var(--transition-smooth);
+  }
+
+  .blog-card:hover .read-more span {
+    transform: translateX(4px);
+  }
+
+  .blog-card:hover .read-more {
+    color: var(--color-primary-hover);
+  }
+</style>

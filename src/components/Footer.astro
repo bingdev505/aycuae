@@ -1,0 +1,345 @@
+---
+import { querySanity, urlFor } from '../utils/sanity';
+
+const siteSettingsQuery = `*[_type == "siteSettings"][0]{
+  siteTitle,
+  phone,
+  email,
+  address,
+  footerAbout,
+  footerGallery
+}`;
+
+const defaultSettings = {
+  siteTitle: 'ConstX',
+  phone: '+0044 9922299',
+  email: 'info@constx.com',
+  address: '22 Sterling Close, Winchester, W23 4FD',
+  footerAbout: 'ConstX is a premium construction, building, and renovation contractor offering high-quality architectural, design, and remodeling solutions.',
+  footerGallery: []
+};
+
+const settings = await querySanity(siteSettingsQuery, defaultSettings);
+---
+
+<footer class="footer" id="contact">
+  <div class="container footer-grid">
+    <!-- About Column -->
+    <div class="footer-col footer-about">
+      <h3 class="logo-text">CONST<span>X</span></h3>
+      <p>{settings.footerAbout}</p>
+      <div class="contact-details">
+        <div class="contact-item">
+          <span class="icon">📍</span>
+          <span>{settings.address}</span>
+        </div>
+        <div class="contact-item">
+          <span class="icon">📞</span>
+          <a href={`tel:${settings.phone}`}>{settings.phone}</a>
+        </div>
+        <div class="contact-item">
+          <span class="icon">✉️</span>
+          <a href={`mailto:${settings.email}`}>{settings.email}</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Links Column -->
+    <div class="footer-col">
+      <h4 class="col-title">Quick Links</h4>
+      <ul class="col-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#services">Our Services</a></li>
+        <li><a href="#projects">Recent Projects</a></li>
+        <li><a href="#team">Our Team</a></li>
+        <li><a href="#blog">News & Blog</a></li>
+      </ul>
+    </div>
+
+    <!-- Services Column -->
+    <div class="footer-col">
+      <h4 class="col-title">Our Services</h4>
+      <ul class="col-links">
+        <li><a href="#services">General Contracting</a></li>
+        <li><a href="#services">Building Architecture</a></li>
+        <li><a href="#services">Interior Designing</a></li>
+        <li><a href="#services">House Renovation</a></li>
+        <li><a href="#services">Metal Roofing</a></li>
+        <li><a href="#services">Property Maintenance</a></li>
+      </ul>
+    </div>
+
+    <!-- Gallery/Instagram Column -->
+    <div class="footer-col">
+      <h4 class="col-title">Recent Gallery</h4>
+      {settings.footerGallery && settings.footerGallery.length > 0 ? (
+        <div class="gallery-grid">
+          {settings.footerGallery.slice(0, 6).map((img: any) => (
+            <div class="gallery-item">
+              <img src={urlFor(img)} alt="Gallery Image" />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div class="gallery-grid">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div class="gallery-item">
+              <div class="gallery-placeholder">🏗️</div>
+            </div>
+          ))}
+        </div>
+      )}
+      
+      <!-- Newsletter Signup -->
+      <div class="newsletter">
+        <h5 class="newsletter-title">Subscribe Newsletter</h5>
+        <form class="newsletter-form" onsubmit="event.preventDefault()">
+          <input type="email" placeholder="Your Email Address" required />
+          <button type="submit" aria-label="Subscribe">→</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Copyright -->
+  <div class="footer-bottom">
+    <div class="container bottom-wrapper">
+      <p>&copy; {new Date().getFullYear()} {settings.siteTitle}. All rights reserved.</p>
+      <div class="bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background-color: var(--color-secondary);
+    color: var(--text-light);
+    padding-top: 80px;
+    border-top: 4px solid var(--color-primary);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
+    gap: 40px;
+    padding-bottom: 60px;
+  }
+
+  @media (max-width: 1024px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .logo-text {
+    font-family: var(--font-heading);
+    font-size: 32px;
+    font-weight: 900;
+    color: white;
+    letter-spacing: -1px;
+    margin-bottom: 8px;
+  }
+
+  .logo-text span {
+    color: var(--color-primary);
+  }
+
+  .footer-about p {
+    color: var(--text-muted-light);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 10px;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+  }
+
+  .contact-item a {
+    color: var(--text-muted-light);
+  }
+
+  .contact-item a:hover {
+    color: var(--color-primary);
+  }
+
+  .contact-item .icon {
+    font-size: 16px;
+  }
+
+  .col-title {
+    font-family: var(--font-heading);
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+    position: relative;
+    padding-bottom: 12px;
+  }
+
+  .col-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background-color: var(--color-primary);
+  }
+
+  .col-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .col-links a {
+    color: var(--text-muted-light);
+    font-size: 15px;
+    transition: var(--transition-smooth);
+  }
+
+  .col-links a:hover {
+    color: var(--color-primary);
+    padding-left: 5px;
+  }
+
+  /* Gallery Grid */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .gallery-item {
+    aspect-ratio: 1;
+    border-radius: var(--border-radius-sm);
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition-smooth);
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.1);
+  }
+
+  .gallery-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    opacity: 0.3;
+  }
+
+  /* Newsletter Form */
+  .newsletter {
+    margin-top: 15px;
+  }
+
+  .newsletter-title {
+    font-family: var(--font-heading);
+    font-size: 15px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 10px;
+  }
+
+  .newsletter-form {
+    display: flex;
+    width: 100%;
+  }
+
+  .newsletter-form input {
+    flex-grow: 1;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-right: none;
+    padding: 12px;
+    color: white;
+    font-family: var(--font-primary);
+    font-size: 14px;
+    border-radius: var(--border-radius-sm) 0 0 var(--border-radius-sm);
+    outline: none;
+  }
+
+  .newsletter-form button {
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 0 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
+    transition: var(--transition-smooth);
+  }
+
+  .newsletter-form button:hover {
+    background-color: var(--color-primary-hover);
+  }
+
+  /* Footer Bottom */
+  .footer-bottom {
+    background-color: #0b111e;
+    padding: 24px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .bottom-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: var(--text-muted-light);
+  }
+
+  .bottom-links {
+    display: flex;
+    gap: 24px;
+  }
+
+  .bottom-links a:hover {
+    color: var(--color-primary);
+  }
+
+  @media (max-width: 640px) {
+    .bottom-wrapper {
+      flex-direction: column;
+      gap: 12px;
+      text-align: center;
+    }
+  }
+</style>

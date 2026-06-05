@@ -1,0 +1,164 @@
+---
+import { querySanity, urlFor } from '../utils/sanity';
+
+const testimonialsQuery = `*[_type == "testimonial"]{
+  clientName,
+  role,
+  quote,
+  rating,
+  image
+}`;
+
+const defaultTestimonials = [
+  {
+    clientName: 'Sarah Jenkins',
+    role: 'CEO, Jenkins Logistics',
+    quote: 'ConstX remodeled our main corporate headquarters. Their builders were professional, efficient, and finished ahead of schedule. Highly recommended!',
+    rating: 5,
+    image: null
+  },
+  {
+    clientName: 'David Miller',
+    role: 'Home Owner',
+    quote: 'Excellent service! They redesigned our kitchen and built a modern garage addition. The cost was transparent and exactly matched the initial estimate.',
+    rating: 5,
+    image: null
+  }
+];
+
+const testimonials = await querySanity(testimonialsQuery, defaultTestimonials);
+---
+
+<section class="section testimonials-section">
+  <div class="container">
+    <div class="section-title-wrapper">
+      <span class="section-subtitle">Client Feedback</span>
+      <h2 class="section-title">What Our Customers Say</h2>
+    </div>
+
+    <!-- Testimonials Swiper -->
+    <div class="swiper testimonials-swiper">
+      <div class="swiper-wrapper">
+        {testimonials.map((test) => {
+          const userImg = test.image ? urlFor(test.image) : 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80';
+          return (
+            <div class="swiper-slide testimonial-slide">
+              <div class="testimonial-card">
+                <!-- Stars -->
+                <div class="stars">
+                  {Array.from({ length: test.rating || 5 }).map(() => (
+                    <span class="star">★</span>
+                  ))}
+                </div>
+                
+                <p class="quote">"{test.quote}"</p>
+                
+                <div class="client-info">
+                  <img src={userImg} alt={test.clientName} class="client-img" />
+                  <div class="client-meta">
+                    <h4 class="client-name">{test.clientName}</h4>
+                    <span class="client-role">{test.role}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      
+      <!-- Controls -->
+      <div class="swiper-pagination testimonials-pagination"></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonials-section {
+    background-color: var(--bg-light);
+  }
+
+  .testimonials-swiper {
+    padding-bottom: 50px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .testimonial-card {
+    background-color: var(--bg-light-card);
+    padding: 50px 40px;
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid rgba(0, 0, 0, 0.02);
+  }
+
+  .stars {
+    margin-bottom: 24px;
+  }
+
+  .star {
+    color: #f59e0b; /* Golden Yellow */
+    font-size: 20px;
+  }
+
+  .quote {
+    font-size: 18px;
+    font-style: italic;
+    color: var(--color-secondary);
+    line-height: 1.8;
+    margin-bottom: 30px;
+    max-width: 650px;
+  }
+
+  .client-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-align: left;
+  }
+
+  .client-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--color-primary);
+  }
+
+  .client-name {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    color: var(--color-secondary);
+    font-weight: 700;
+  }
+
+  .client-role {
+    font-size: 13px;
+    color: var(--text-muted-dark);
+  }
+
+  .testimonials-pagination {
+    bottom: 0 !important;
+  }
+</style>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    new Swiper('.testimonials-swiper', {
+      slidesPerView: 1,
+      spaceBetween: 30,
+      loop: true,
+      autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+      },
+      pagination: {
+        el: '.testimonials-pagination',
+        clickable: true,
+      }
+    });
+  });
+</script>

@@ -1,0 +1,315 @@
+---
+import { querySanity, urlFor } from '../utils/sanity';
+
+const siteSettingsQuery = `*[_type == "siteSettings"][0]{
+  siteTitle,
+  phone,
+  email,
+  address,
+  hours,
+  facebookUrl,
+  twitterUrl,
+  instagramUrl,
+  linkedinUrl,
+  logo
+}`;
+
+const defaultSettings = {
+  siteTitle: 'ConstX',
+  phone: '+0044 9922299',
+  email: 'info@constx.com',
+  address: '22 Sterling Close, Winchester, W23 4FD',
+  hours: 'Sun - Fri (7:00 - 18:00)',
+  facebookUrl: 'https://facebook.com',
+  twitterUrl: 'https://twitter.com',
+  instagramUrl: 'https://instagram.com',
+  linkedinUrl: 'https://linkedin.com',
+  logo: null
+};
+
+const settings = await querySanity(siteSettingsQuery, defaultSettings);
+const logoUrl = settings.logo ? urlFor(settings.logo) : '/assets/images/logo/logo.svg';
+---
+
+<header class="header">
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="container top-bar-wrapper">
+      <div class="info-list">
+        <div class="info-item">
+          <span class="icon">🕒</span>
+          <span>{settings.hours}</span>
+        </div>
+        <div class="info-item">
+          <span class="icon">📞</span>
+          <a href={`tel:${settings.phone}`}>{settings.phone}</a>
+        </div>
+        <div class="info-item hidden-mobile">
+          <span class="icon">📍</span>
+          <span>{settings.address}</span>
+        </div>
+      </div>
+      <div class="social-links">
+        {settings.facebookUrl && <a href={settings.facebookUrl} target="_blank" aria-label="Facebook">FB</a>}
+        {settings.twitterUrl && <a href={settings.twitterUrl} target="_blank" aria-label="Twitter">TW</a>}
+        {settings.instagramUrl && <a href={settings.instagramUrl} target="_blank" aria-label="Instagram">IG</a>}
+        {settings.linkedinUrl && <a href={settings.linkedinUrl} target="_blank" aria-label="LinkedIn">LN</a>}
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Navigation -->
+  <div class="nav-bar">
+    <div class="container nav-wrapper">
+      <a href="/" class="logo">
+        {settings.logo ? (
+          <img src={logoUrl} alt={settings.siteTitle} />
+        ) : (
+          <span class="logo-text">CONST<span>X</span></span>
+        )}
+      </a>
+
+      <nav class="nav-menu" id="navMenu">
+        <a href="/" class="nav-link active">Home</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#services" class="nav-link">Services</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#team" class="nav-link">Team</a>
+        <a href="#blog" class="nav-link">Blog</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="#contact" class="btn btn-primary btn-quote hidden-tablet">Get a Quote</a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  .header {
+    width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: var(--bg-light-card);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  }
+
+  /* Top Bar */
+  .top-bar {
+    background-color: var(--color-secondary);
+    color: var(--text-light);
+    font-size: 13px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .top-bar-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .info-list {
+    display: flex;
+    gap: 24px;
+  }
+
+  .info-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .info-item a {
+    color: var(--text-muted-light);
+  }
+
+  .info-item a:hover {
+    color: var(--color-primary);
+  }
+
+  .info-item .icon {
+    font-size: 14px;
+  }
+
+  .social-links {
+    display: flex;
+    gap: 16px;
+  }
+
+  .social-links a {
+    color: var(--text-muted-light);
+    font-weight: 500;
+  }
+
+  .social-links a:hover {
+    color: var(--color-primary);
+  }
+
+  /* Nav Bar */
+  .nav-bar {
+    padding: 15px 0;
+    background-color: var(--bg-light-card);
+  }
+
+  .nav-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+
+  .logo img {
+    height: 45px;
+    object-fit: contain;
+  }
+
+  .logo-text {
+    font-family: var(--font-heading);
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--color-secondary);
+    letter-spacing: -1px;
+  }
+
+  .logo-text span {
+    color: var(--color-primary);
+  }
+
+  .nav-menu {
+    display: flex;
+    gap: 28px;
+  }
+
+  .nav-link {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--color-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    padding: 8px 0;
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-primary);
+    transition: var(--transition-smooth);
+  }
+
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    width: 100%;
+  }
+
+  .nav-link:hover,
+  .nav-link.active {
+    color: var(--color-primary);
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .btn-quote {
+    padding: 10px 20px;
+    font-size: 13px;
+  }
+
+  /* Mobile/Tablet Menu */
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  .menu-toggle .bar {
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-secondary);
+    transition: var(--transition-smooth);
+  }
+
+  @media (max-width: 1024px) {
+    .menu-toggle {
+      display: flex;
+    }
+
+    .nav-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background-color: var(--bg-light-card);
+      flex-direction: column;
+      padding: 24px;
+      gap: 16px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .nav-menu.active {
+      display: flex;
+    }
+
+    .hidden-tablet {
+      display: none !important;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hidden-mobile {
+      display: none !important;
+    }
+    
+    .info-list {
+      gap: 12px;
+    }
+  }
+</style>
+
+<script>
+  const menuToggle = document.getElementById('menuToggle');
+  const navMenu = document.getElementById('navMenu');
+
+  if (menuToggle && navMenu) {
+    menuToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+      menuToggle.classList.toggle('open');
+    });
+
+    // Close menu when clicking a link
+    const navLinks = navMenu.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+        menuToggle.classList.remove('open');
+      });
+    });
+  }
+</script>

@@ -4,7 +4,7 @@ import react from '@astrojs/react';
 import sanity from '@sanity/astro';
 import { loadEnv } from 'vite';
 
-const { PUBLIC_SANITY_PROJECT_ID, PUBLIC_SANITY_DATASET } = loadEnv(
+const { PUBLIC_SANITY_PROJECT_ID, PUBLIC_SANITY_DATASET, SANITY_TOKEN } = loadEnv(
   process.env.NODE_ENV || 'development',
   process.cwd(),
   ''
@@ -19,6 +19,7 @@ export default defineConfig({
       dataset: PUBLIC_SANITY_DATASET || 'production',
       studioBasePath: '/admin',
       useCdn: false,
+      token: SANITY_TOKEN || process.env.SANITY_TOKEN,
     }),
   ],
 });

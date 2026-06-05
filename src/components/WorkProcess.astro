@@ -23,22 +23,23 @@ const steps = [
 ];
 ---
 
-<section class="section process-section">
+<section class="work-process-area">
   <div class="container">
-    <div class="section-title-wrapper">
-      <span class="section-subtitle">Our Execution Path</span>
-      <h2 class="section-title">How We Build Projects</h2>
+    <div class="section-title-box text-center">
+      <span class="sub-heading">Execution Path</span>
+      <h2 class="main-heading text-white">How We Build Projects</h2>
     </div>
 
-    <div class="grid grid-4 process-grid">
+    <div class="row">
       {steps.map((step, index) => (
-        <div class="process-step">
-          <div class="step-num-wrapper">
-            <span class="step-num">{step.number}</span>
-            {index < steps.length - 1 && <div class="step-line hidden-tablet"></div>}
+        <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0">
+          <div class="process-card">
+            <div class="process-number-box">
+              <span class="process-num">{step.number}</span>
+            </div>
+            <h3 class="process-title">{step.title}</h3>
+            <p class="process-desc">{step.description}</p>
           </div>
-          <h3 class="step-title">{step.title}</h3>
-          <p class="step-desc">{step.description}</p>
         </div>
       ))}
     </div>
@@ -46,84 +47,94 @@ const steps = [
 </section>
 
 <style>
-  .process-section {
-    background-color: var(--bg-light);
+  .work-process-area {
+    padding: 100px 0;
+    background: #090d16;
   }
 
-  .process-grid {
-    margin-top: 40px;
+  .section-title-box {
+    margin-bottom: 50px;
   }
 
-  .process-step {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  .sub-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    color: #ff6900;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    display: block;
+    margin-bottom: 15px;
+  }
+
+  .main-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .process-card {
+    background: #151c28;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 40px 30px;
+    border-radius: 20px;
     text-align: center;
-    position: relative;
+    transition: all 0.3s ease;
+    height: 100%;
   }
 
-  .step-num-wrapper {
-    position: relative;
-    width: 80px;
-    height: 80px;
+  .process-card:hover {
+    transform: translateY(-5px);
+    border-color: #ff6900;
+  }
+
+  .process-number-box {
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    background-color: var(--bg-light-card);
-    border: 2px dashed var(--color-primary);
-    display: flex;
+    background: rgba(255, 255, 255, 0.05);
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 24px;
-    transition: var(--transition-smooth);
-    z-index: 5;
+    margin-bottom: 25px;
+    transition: all 0.3s ease;
   }
 
-  .step-num {
-    font-family: var(--font-heading);
-    font-size: 24px;
-    font-weight: 800;
-    color: var(--color-primary);
+  .process-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: #ff6900;
   }
 
-  .process-step:hover .step-num-wrapper {
-    background-color: var(--color-primary);
-    border-color: var(--color-primary);
+  .process-card:hover .process-number-box {
+    background: #ff6900;
   }
 
-  .process-step:hover .step-num {
+  .process-card:hover .process-num {
     color: white;
   }
 
-  .step-line {
-    position: absolute;
-    top: 50%;
-    left: 80px;
-    width: calc(100% + 24px - 80px);
-    height: 2px;
-    border-top: 2px dashed rgba(21, 128, 61, 0.3);
-    transform: translateY(-50%);
-    z-index: 1;
+  .process-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    color: white;
+    margin-bottom: 15px;
   }
 
-  .step-title {
-    font-family: var(--font-heading);
-    font-size: 18px;
-    color: var(--color-secondary);
-    margin-bottom: 12px;
-  }
-
-  .step-desc {
-    color: var(--text-muted-dark);
-    font-size: 14px;
+  .process-desc {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
     line-height: 1.6;
-    padding: 0 10px;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
   }
 
-  @media (max-width: 1024px) {
-    .hidden-tablet {
-      display: none !important;
-    }
-    .process-grid {
-      gap: 40px;
+  @media (max-width: 991px) {
+    .main-heading {
+      font-size: 32px;
     }
   }
 </style>

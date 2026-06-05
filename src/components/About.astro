@@ -12,7 +12,7 @@ const aboutSectionQuery = `*[_type == "aboutSection"][0]{
 }`;
 
 const defaultAbout = {
-  badgeTitle: '30+',
+  badgeTitle: '25+',
   badgeSubtitle: 'Years of Experience',
   title: 'We are Professional Builders and Contractors since 1996',
   description: 'With over three decades of building and construction engineering experience, we design and construct residential, commercial, and industrial facilities. We pride ourselves on engineering safety, building durability, and premium finishes.',
@@ -22,79 +22,91 @@ const defaultAbout = {
     'Accurate blueprints and cost estimation',
     'On-time delivery and strict adherence to deadlines'
   ],
-  youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+  youtubeUrl: 'https://www.youtube.com/watch?v=Y-x0efG1seA',
   image: null
 };
 
 const about = await querySanity(aboutSectionQuery, defaultAbout);
-const imageUrl = about.image ? urlFor(about.image) : 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80';
+const imageUrl = about.image ? urlFor(about.image) : '/wp-content/uploads/2025/11/about-img.jpg';
 ---
 
-<section class="section about-section" id="about">
-  <div class="container about-grid">
-    <!-- Image & Video Column -->
-    <div class="image-col">
-      <div class="image-wrapper">
-        <img src={imageUrl} alt="About Construction" />
-        
-        <!-- Experience Badge -->
-        <div class="experience-badge">
-          <span class="badge-num">{about.badgeTitle}</span>
-          <span class="badge-text">{about.badgeSubtitle}</span>
+<section class="about-area" id="about">
+  <div class="container">
+    <div class="row align-items-center">
+      <!-- Image Column -->
+      <div class="col-lg-6 col-12 mb-5 mb-lg-0">
+        <div class="about-img-box">
+          <div class="about-main-img">
+            <img src={imageUrl} alt="About Us" class="img-fluid rounded-4" />
+          </div>
+          <!-- Video play trigger inside image -->
+          <div class="about-video-btn">
+            <a class="video-btn-play popup-youtube" href={about.youtubeUrl} aria-label="Play video">
+              <i class="fas fa-play"></i>
+            </a>
+          </div>
+          <!-- Rotating Badge Overlay -->
+          <div class="about-experience-badge">
+            <div class="badge-content">
+              <h3>{about.badgeTitle}</h3>
+              <p>{about.badgeSubtitle}</p>
+            </div>
+          </div>
         </div>
-
-        <!-- Video Trigger -->
-        <a href={about.youtubeUrl} target="_blank" class="video-play-btn" aria-label="Play Video">
-          <span class="play-icon">▶</span>
-        </a>
       </div>
-    </div>
 
-    <!-- Text & Accordion Column -->
-    <div class="text-col">
-      <span class="section-subtitle">About Our Company</span>
-      <h2 class="section-title">{about.title}</h2>
-      <p class="about-desc">{about.description}</p>
-
-      <!-- Bulleted list -->
-      <ul class="features-list">
-        {about.featuresList.map((feature: string) => (
-          <li>
-            <span class="check-icon">✓</span>
-            {feature}
-          </li>
-        ))}
-      </ul>
-
-      <!-- Interactive Accordion -->
-      <div class="accordion">
-        <div class="accordion-item active">
-          <button class="accordion-header">
-            <span>Our Professional Mission</span>
-            <span class="acc-icon">+</span>
-          </button>
-          <div class="accordion-body">
-            <p>Our mission is to lead the building contractor industry with high safety standards, state-of-the-art architectures, and transparent pricing.</p>
+      <!-- Text / Content Column -->
+      <div class="col-lg-6 col-12 ps-lg-5">
+        <div class="about-content">
+          <div class="section-title-box">
+            <span class="sub-heading">About Our Company</span>
+            <h2 class="main-heading">{about.title}</h2>
           </div>
-        </div>
+          <p class="about-description">{about.description}</p>
 
-        <div class="accordion-item">
-          <button class="accordion-header">
-            <span>Eco-Friendly Engineering Standards</span>
-            <span class="acc-icon">+</span>
-          </button>
-          <div class="accordion-body">
-            <p>We actively utilize eco-friendly construction materials and sustainable energy architectures to reduce environmental footprints.</p>
-          </div>
-        </div>
+          <!-- Accordion list -->
+          <div class="about-accordion" id="aboutAccordion">
+            <div class="accordion-card active">
+              <div class="accordion-header" id="headingOne">
+                <button class="accordion-btn" type="button">
+                  <span>Our Professional Mission</span>
+                  <i class="fa-solid fa-plus icon-toggle"></i>
+                </button>
+              </div>
+              <div class="accordion-collapse">
+                <div class="accordion-body">
+                  Our mission is to lead the building contractor industry with high safety standards, state-of-the-art architectures, and transparent pricing.
+                </div>
+              </div>
+            </div>
 
-        <div class="accordion-item">
-          <button class="accordion-header">
-            <span>Guaranteed Quality Assurance</span>
-            <span class="acc-icon">+</span>
-          </button>
-          <div class="accordion-body">
-            <p>Every phase of construction undergoes double-layer quality audits from external certified engineers to guarantee safety.</p>
+            <div class="accordion-card">
+              <div class="accordion-header" id="headingTwo">
+                <button class="accordion-btn" type="button">
+                  <span>Eco-Friendly Engineering Standards</span>
+                  <i class="fa-solid fa-plus icon-toggle"></i>
+                </button>
+              </div>
+              <div class="accordion-collapse">
+                <div class="accordion-body">
+                  We actively utilize eco-friendly construction materials and sustainable energy architectures to reduce environmental footprints.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-card">
+              <div class="accordion-header" id="headingThree">
+                <button class="accordion-btn" type="button">
+                  <span>Guaranteed Quality Assurance</span>
+                  <i class="fa-solid fa-plus icon-toggle"></i>
+                </button>
+              </div>
+              <div class="accordion-collapse">
+                <div class="accordion-body">
+                  Every phase of construction undergoes double-layer quality audits from external certified engineers to guarantee safety.
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -103,233 +115,191 @@ const imageUrl = about.image ? urlFor(about.image) : 'https://images.unsplash.co
 </section>
 
 <style>
-  .about-section {
-    background-color: var(--bg-light);
-  }
-
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: center;
-  }
-
-  @media (max-width: 1024px) {
-    .about-grid {
-      grid-template-columns: 1fr;
-      gap: 40px;
-    }
-  }
-
-  /* Image Column */
-  .image-col {
-    position: relative;
-  }
-
-  .image-wrapper {
-    position: relative;
-    border-radius: var(--border-radius-lg);
-    overflow: hidden;
-    box-shadow: var(--box-shadow-premium);
-  }
-
-  .image-wrapper img {
-    width: 100%;
-    height: 500px;
-    object-fit: cover;
-    display: block;
-  }
-
-  .experience-badge {
-    position: absolute;
-    bottom: 30px;
-    left: 30px;
-    background-color: var(--color-primary);
+  .about-area {
+    padding: 100px 0;
+    background: #090d16;
     color: white;
-    padding: 24px 30px;
-    border-radius: var(--border-radius-md);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    z-index: 10;
   }
 
-  .badge-num {
-    font-family: var(--font-heading);
-    font-size: 36px;
-    font-weight: 800;
-    line-height: 1;
-    margin-bottom: 4px;
+  .about-img-box {
+    position: relative;
   }
 
-  .badge-text {
-    font-size: 13px;
-    text-transform: uppercase;
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-align: center;
+  .about-main-img img {
+    width: 100%;
+    object-fit: cover;
+    border: 1px solid rgba(255, 255, 255, 0.05);
   }
 
-  .video-play-btn {
+  .about-video-btn {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 80px;
-    height: 80px;
-    background-color: white;
+  }
+
+  .video-btn-play {
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
+    background: #ff6900;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    z-index: 10;
-    transition: var(--transition-smooth);
-  }
-
-  .video-play-btn:hover {
-    transform: translate(-50%, -50%) scale(1.1);
-    background-color: var(--color-accent);
     color: white;
+    font-size: 18px;
+    text-decoration: none;
+    transition: all 0.3s ease;
   }
 
-  .play-icon {
-    font-size: 24px;
-    color: var(--color-primary);
-    margin-left: 4px;
+  .video-btn-play:hover {
+    background: white;
+    color: #ff6900;
+    transform: scale(1.1);
   }
 
-  .video-play-btn:hover .play-icon {
+  .about-experience-badge {
+    position: absolute;
+    bottom: -30px;
+    right: -30px;
+    background: #ff6900;
     color: white;
+    padding: 25px 30px;
+    border-radius: 20px;
+    max-width: 200px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(255, 105, 0, 0.3);
   }
 
-  /* Text Column */
-  .text-col {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+  .badge-content h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 38px;
+    font-weight: 700;
+    margin: 0;
   }
 
-  .section-subtitle {
-    align-self: flex-start;
-    margin-bottom: 12px;
+  .badge-content p {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin: 5px 0 0;
+    line-height: 1.3;
   }
 
-  .section-title {
-    margin-bottom: 20px;
-    text-align: left;
+  /* Content Column */
+  .sub-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    color: #ff6900;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    display: block;
+    margin-bottom: 15px;
   }
 
-  .about-desc {
-    color: var(--text-muted-dark);
+  .main-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: white;
+    margin-bottom: 25px;
+  }
+
+  .about-description {
+    font-family: 'DM Sans', sans-serif;
     font-size: 16px;
-    margin-bottom: 24px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 35px;
   }
 
-  .features-list {
-    list-style: none;
+  /* Accordion styles */
+  .about-accordion {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-bottom: 30px;
+    gap: 15px;
   }
 
-  .features-list li {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--color-secondary);
-  }
-
-  .check-icon {
-    color: var(--color-primary);
-    font-weight: 900;
-    font-size: 16px;
-  }
-
-  /* Accordion styling */
-  .accordion {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .accordion-item {
-    background-color: var(--bg-light-card);
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    border-radius: var(--border-radius-sm);
+  .accordion-card {
+    background: #151c28;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
     overflow: hidden;
   }
 
-  .accordion-header {
-    width: 100%;
-    background: transparent;
-    border: none;
-    padding: 16px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-family: var(--font-heading);
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--color-secondary);
-    cursor: pointer;
-    text-align: left;
-    transition: var(--transition-smooth);
+  .accordion-card.active {
+    border-color: #ff6900;
   }
 
-  .accordion-header:hover {
-    color: var(--color-primary);
+  .accordion-btn {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .accordion-collapse {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+
+  .accordion-card.active .accordion-collapse {
+    max-height: 200px;
   }
 
   .accordion-body {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-out;
-    padding: 0 20px;
+    padding: 0 20px 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
   }
 
-  .accordion-body p {
-    font-size: 14px;
-    color: var(--text-muted-dark);
-    padding-bottom: 16px;
+  .icon-toggle {
+    transition: transform 0.3s ease;
   }
 
-  .acc-icon {
-    font-size: 18px;
-    font-weight: 400;
-    transition: var(--transition-smooth);
-  }
-
-  .accordion-item.active .acc-icon {
+  .accordion-card.active .icon-toggle {
     transform: rotate(45deg);
+    color: #ff6900;
   }
 
-  .accordion-item.active .accordion-body {
-    max-height: 100px;
+  @media (max-width: 991px) {
+    .about-experience-badge {
+      position: static;
+      margin: 30px auto 0;
+    }
+    .main-heading {
+      font-size: 32px;
+    }
   }
 </style>
 
 <script>
-  const accordionHeaders = document.querySelectorAll('.accordion-header');
-  accordionHeaders.forEach(header => {
-    header.addEventListener('click', () => {
-      const currentItem = header.parentElement;
-      const isActive = currentItem?.classList.contains('active');
-      
-      // Close all accordion items
-      document.querySelectorAll('.accordion-item').forEach(item => {
-        item.classList.remove('active');
+  const accordionCards = document.querySelectorAll('.accordion-card');
+  accordionCards.forEach(card => {
+    const btn = card.querySelector('.accordion-btn');
+    if (btn) {
+      btn.addEventListener('click', () => {
+        const isActive = card.classList.contains('active');
+        accordionCards.forEach(c => c.classList.remove('active'));
+        if (!isActive) {
+          card.classList.add('active');
+        }
       });
-
-      // Open clicked item if it wasn't active
-      if (!isActive && currentItem) {
-        currentItem.classList.add('active');
-      }
-    });
+    }
   });
 </script>

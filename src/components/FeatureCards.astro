@@ -10,116 +10,139 @@ const featureCardsQuery = `*[_type == "featureCard"]{
 
 const defaultCards = [
   {
-    title: 'Smart Planning',
-    description: 'We plan and draft every detail to minimize resource waste and deliver on time.',
-    icon: '📐',
+    title: 'DesignBuild',
+    description: 'Shaping the future of design',
+    icon: '01',
     colorStyle: 'orange'
   },
   {
-    title: 'Professional Building',
-    description: 'Expert structural and architectural builders handling heavy-duty industrial works.',
-    icon: '🏗️',
-    colorStyle: 'green'
+    title: 'Modern Renovation',
+    description: 'Bespoke high-end custom building solutions',
+    icon: '02',
+    colorStyle: 'orange'
   },
   {
-    title: 'Quality Renovation',
-    description: 'Bespoke designs and premium interior finishes for homes and corporate spaces.',
-    icon: '🏠',
-    colorStyle: 'blue'
+    title: 'Interior Design',
+    description: 'Aesthetic spaces tailored to modern lifestyle',
+    icon: '03',
+    colorStyle: 'orange'
   }
 ];
 
 const cards = await querySanity(featureCardsQuery, defaultCards);
 ---
 
-<section class="features-section">
-  <div class="container features-grid">
-    {cards.map((card) => (
-      <div class={`feature-card border-${card.colorStyle}`}>
-        <div class={`icon-wrapper bg-${card.colorStyle}`}>
-          <span class="icon">{card.icon}</span>
-        </div>
-        <h3 class="card-title">{card.title}</h3>
-        <p class="card-description">{card.description}</p>
+<section class="features-area">
+  <div class="container">
+    <div class="features-wrapper">
+      <div class="row">
+        {cards.map((card) => (
+          <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
+            <div class="feature-item">
+              <div class="feature-item-header">
+                <span class="feature-label">{card.title}</span>
+                <span class="feature-number">{card.icon}</span>
+              </div>
+              <h3 class="feature-title">{card.description}</h3>
+              <div class="feature-btn">
+                <a href="#contact" class="btn-arrow" aria-label="Learn more">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="14" viewBox="0 0 18 14" fill="currentColor">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M16.8065 5.82872C14.3962 5.82872 12.1995 3.54151 12.1995 1.02981V0L10.2223 0V1.02981C10.2223 2.85669 10.9914 4.57028 12.1985 5.82872L0 5.82872L0 7.88833L12.1985 7.88833C10.9914 9.14676 10.2223 10.8604 10.2223 12.6872V13.717H12.1995V12.6872C12.1995 10.1755 14.3962 7.88833 16.8065 7.88833H17.7951V5.82872H16.8065Z"></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
-    ))}
+    </div>
   </div>
 </section>
 
 <style>
-  .features-section {
+  .features-area {
     position: relative;
-    z-index: 20;
-    margin-top: -80px; /* Overlap Hero banner */
-    padding-bottom: 40px;
+    z-index: 10;
+    margin-top: -60px;
+    padding-bottom: 50px;
   }
 
-  .features-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-  }
-
-  @media (max-width: 1024px) {
-    .features-grid {
-      grid-template-columns: 1fr;
-      margin-top: 0;
-    }
-    .features-section {
-      margin-top: 20px;
-    }
-  }
-
-  .feature-card {
-    background-color: var(--bg-light-card);
-    padding: 40px 30px;
-    border-radius: var(--border-radius-md);
-    box-shadow: var(--box-shadow-premium);
-    transition: var(--transition-smooth);
-    border-bottom: 4px solid transparent;
+  .feature-item {
+    background: #151c28;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 35px 30px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    justify-content: space-between;
   }
 
-  .feature-card:hover {
-    transform: translateY(-10px);
+  .feature-item:hover {
+    transform: translateY(-5px);
+    border-color: #ff6900;
+    background: #192231;
   }
 
-  .icon-wrapper {
-    width: 60px;
-    height: 60px;
-    border-radius: var(--border-radius-sm);
+  .feature-item-header {
     display: flex;
     align-items: center;
-    justify-content: center;
-    margin-bottom: 24px;
+    justify-content: space-between;
+    margin-bottom: 20px;
   }
 
-  .icon {
-    font-size: 32px;
+  .feature-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: #ff6900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
   }
 
-  .card-title {
-    font-family: var(--font-heading);
+  .feature-number {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
     font-size: 20px;
-    color: var(--color-secondary);
-    margin-bottom: 16px;
+    color: rgba(255, 255, 255, 0.1);
   }
 
-  .card-description {
-    font-size: 15px;
-    color: var(--text-muted-dark);
-    line-height: 1.6;
+  .feature-item:hover .feature-number {
+    color: #ff6900;
   }
 
-  /* Color Accent Styles */
-  .bg-orange { background-color: rgba(249, 115, 22, 0.1); color: var(--color-accent); }
-  .border-orange { border-bottom-color: var(--color-accent); }
-  
-  .bg-green { background-color: rgba(21, 128, 61, 0.1); color: var(--color-primary); }
-  .border-green { border-bottom-color: var(--color-primary); }
-  
-  .bg-blue { background-color: rgba(15, 23, 42, 0.1); color: #0284c7; }
-  .border-blue { border-bottom-color: #0284c7; }
+  .feature-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 1.3;
+    color: white;
+    margin-bottom: 30px;
+  }
+
+  .btn-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    transition: all 0.3s ease;
+  }
+
+  .feature-item:hover .btn-arrow {
+    background: #ff6900;
+    color: white;
+    transform: rotate(-45deg);
+  }
+
+  @media (max-width: 991px) {
+    .features-area {
+      margin-top: 0;
+      padding-top: 50px;
+    }
+  }
 </style>

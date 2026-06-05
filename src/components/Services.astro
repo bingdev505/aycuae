@@ -14,42 +14,42 @@ const defaultServices = [
     title: 'General Contracting',
     slug: 'general-contracting',
     description: 'A-to-Z construction project management, permitting, subcontracting, and safety execution.',
-    icon: '🏗️',
+    icon: 'fa-solid fa-helmet-safety',
     image: null
   },
   {
     title: 'Building Architecture',
     slug: 'building-architecture',
     description: 'Creative and modern structural drafts, blueprints, and architectural engineering blueprints.',
-    icon: '📐',
+    icon: 'fa-solid fa-compass-drafting',
     image: null
   },
   {
     title: 'Interior Design',
     slug: 'interior-design',
     description: 'Bespoke custom layouts, premium furniture mapping, lighting aesthetics, and finishes.',
-    icon: '✨',
+    icon: 'fa-solid fa-couch',
     image: null
   },
   {
     title: 'House Renovation',
     slug: 'house-renovation',
     description: 'Modern room additions, kitchen modeling, bathroom repairs, and full house remodeling.',
-    icon: '🔨',
+    icon: 'fa-solid fa-hammer',
     image: null
   },
   {
     title: 'Metal Roofing',
     slug: 'metal-roofing',
     description: 'Highly durable weather-resistant metallic roof structures, insulation, and repair works.',
-    icon: '🏠',
+    icon: 'fa-solid fa-trowel-bricks',
     image: null
   },
   {
     title: 'Property Maintenance',
     slug: 'property-maintenance',
     description: 'Routine structural integrity checks, electrical audits, plumbing, and wear-and-tear fixes.',
-    icon: '🔧',
+    icon: 'fa-solid fa-wrench',
     image: null
   }
 ];
@@ -57,28 +57,30 @@ const defaultServices = [
 const services = await querySanity(servicesQuery, defaultServices);
 ---
 
-<section class="section services-section" id="services">
+<section class="services-area" id="services">
   <div class="container">
-    <div class="section-title-wrapper">
-      <span class="section-subtitle">What We Do</span>
-      <h2 class="section-title">Our Premium Services</h2>
+    <div class="section-title-box text-center">
+      <span class="sub-heading">What We Do</span>
+      <h2 class="main-heading text-white">Our Premium Services</h2>
     </div>
 
-    <div class="grid grid-3 services-grid">
+    <div class="row">
       {services.map((service) => {
-        const bgUrl = service.image ? urlFor(service.image) : 'https://images.unsplash.com/photo-1581094288338-2314dddb7ecc?auto=format&fit=crop&w=400&q=80';
+        const bgUrl = service.image ? urlFor(service.image) : '/wp-content/uploads/2025/11/service-bg.jpg';
         return (
-          <div class="service-card">
-            <div class="card-image">
-              <img src={bgUrl} alt={service.title} />
-              <div class="icon-badge">{service.icon || '🏗️'}</div>
-            </div>
-            <div class="card-body">
-              <h3 class="service-title">{service.title}</h3>
-              <p class="service-desc">{service.description}</p>
-              <a href={`#contact`} class="read-more-link">
-                Request Service <span>→</span>
-              </a>
+          <div class="col-lg-4 col-md-6 col-12 mb-4">
+            <div class="service-item-card" style={`background-image: linear-gradient(rgba(21, 28, 40, 0.9), rgba(21, 28, 40, 0.9)), url(${bgUrl});`}>
+              <div class="service-icon-box">
+                <i class={service.icon || 'fa-solid fa-helmet-safety'}></i>
+              </div>
+              <h3 class="service-card-title">{service.title}</h3>
+              <p class="service-card-desc">{service.description}</p>
+              <div class="service-card-footer">
+                <a href="#contact" class="read-more-btn">
+                  <span>Read More</span>
+                  <i class="fa-solid fa-arrow-right-long"></i>
+                </a>
+              </div>
             </div>
           </div>
         );
@@ -88,105 +90,117 @@ const services = await querySanity(servicesQuery, defaultServices);
 </section>
 
 <style>
-  .services-section {
-    background-color: var(--bg-light-card);
+  .services-area {
+    padding: 100px 0;
+    background: #090d16;
   }
 
-  .services-grid {
-    margin-top: 20px;
+  .section-title-box {
+    margin-bottom: 50px;
   }
 
-  .service-card {
-    background-color: var(--bg-light);
-    border-radius: var(--border-radius-md);
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
-    transition: var(--transition-smooth);
+  .sub-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    color: #ff6900;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    display: block;
+    margin-bottom: 15px;
+  }
+
+  .main-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 25px;
+  }
+
+  .service-item-card {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 40px 30px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.3s ease;
   }
 
-  .service-card:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--box-shadow-premium);
+  .service-item-card:hover {
+    transform: translateY(-5px);
+    border-color: #ff6900;
   }
 
-  .card-image {
-    position: relative;
-    height: 200px;
-    width: 100%;
-    overflow: hidden;
-  }
-
-  .card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: var(--transition-smooth);
-  }
-
-  .service-card:hover .card-image img {
-    transform: scale(1.1);
-  }
-
-  .icon-badge {
-    position: absolute;
-    bottom: -20px;
-    left: 24px;
-    width: 50px;
-    height: 50px;
-    background-color: var(--color-primary);
-    color: white;
-    border-radius: 50%;
+  .service-icon-box {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 24px;
-    box-shadow: 0 4px 15px rgba(21, 128, 61, 0.4);
-    z-index: 5;
+    color: #ff6900;
+    margin-bottom: 25px;
+    transition: all 0.3s ease;
   }
 
-  .card-body {
-    padding: 36px 24px 24px;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
+  .service-item-card:hover .service-icon-box {
+    background: #ff6900;
+    color: white;
   }
 
-  .service-title {
-    font-family: var(--font-heading);
-    font-size: 20px;
-    color: var(--color-secondary);
-    margin-bottom: 12px;
-  }
-
-  .service-desc {
-    color: var(--text-muted-dark);
-    font-size: 14px;
-    line-height: 1.6;
-    margin-bottom: 20px;
-    flex-grow: 1;
-  }
-
-  .read-more-link {
-    color: var(--color-primary);
+  .service-card-title {
+    font-family: 'Space Grotesk', sans-serif;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 22px;
+    color: white;
+    margin-bottom: 15px;
+  }
+
+  .service-card-desc {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 25px;
+    flex-grow: 1;
+  }
+
+  .read-more-btn {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    align-self: flex-start;
+    gap: 10px;
+    color: white;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s ease;
   }
 
-  .read-more-link span {
-    transition: var(--transition-smooth);
+  .read-more-btn i {
+    transition: transform 0.3s ease;
   }
 
-  .service-card:hover .read-more-link span {
-    transform: translateX(4px);
+  .read-more-btn:hover {
+    color: #ff6900;
   }
 
-  .service-card:hover .read-more-link {
-    color: var(--color-primary-hover);
+  .read-more-btn:hover i {
+    transform: translateX(5px);
+  }
+
+  @media (max-width: 991px) {
+    .main-heading {
+      font-size: 32px;
+    }
   }
 </style>

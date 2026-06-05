@@ -40,32 +40,31 @@ const defaultTeam = [
 const team = await querySanity(teamQuery, defaultTeam);
 ---
 
-<section class="section team-section" id="team">
+<section class="team-area" id="team">
   <div class="container">
-    <div class="section-title-wrapper">
-      <span class="section-subtitle">Our Experts</span>
-      <h2 class="section-title">Meet Our Leadership</h2>
+    <div class="section-title-box text-center">
+      <span class="sub-heading">Our Experts</span>
+      <h2 class="main-heading text-white">Meet Our Leadership</h2>
     </div>
 
-    <div class="grid grid-3 team-grid">
+    <div class="row">
       {team.map((member) => {
-        const profileImg = member.image ? urlFor(member.image) : 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80';
+        const profileImg = member.image ? urlFor(member.image) : '/wp-content/uploads/2025/11/team-member.jpg';
         return (
-          <div class="team-card">
-            <div class="card-image">
-              <img src={profileImg} alt={member.name} />
-              <!-- Hover Socials Overlay -->
-              <div class="socials-overlay">
-                <div class="social-icons">
-                  {member.facebookUrl && <a href={member.facebookUrl} class="social-icon">FB</a>}
-                  {member.twitterUrl && <a href={member.twitterUrl} class="social-icon">TW</a>}
-                  {member.instagramUrl && <a href={member.instagramUrl} class="social-icon">IG</a>}
+          <div class="col-lg-4 col-md-6 col-12 mb-4">
+            <div class="team-member-card">
+              <div class="member-photo-box">
+                <img src={profileImg} alt={member.name} class="img-fluid" />
+                <div class="member-social-shares">
+                  {member.facebookUrl && <a href={member.facebookUrl} class="social-share-btn"><i class="fab fa-facebook-f"></i></a>}
+                  {member.twitterUrl && <a href={member.twitterUrl} class="social-share-btn"><i class="fab fa-twitter"></i></a>}
+                  {member.instagramUrl && <a href={member.instagramUrl} class="social-share-btn"><i class="fab fa-instagram"></i></a>}
                 </div>
               </div>
-            </div>
-            <div class="card-body">
-              <h3 class="member-name">{member.name}</h3>
-              <span class="member-role">{member.role}</span>
+              <div class="member-info-box">
+                <h3 class="member-title-name">{member.name}</h3>
+                <span class="member-role-title">{member.role}</span>
+              </div>
             </div>
           </div>
         );
@@ -75,112 +74,90 @@ const team = await querySanity(teamQuery, defaultTeam);
 </section>
 
 <style>
-  .team-section {
-    background-color: var(--bg-light-card);
+  .team-area {
+    padding: 100px 0;
+    background: #090d16;
   }
 
-  .team-grid {
-    margin-top: 20px;
-  }
-
-  .team-card {
-    background-color: var(--bg-light);
-    border-radius: var(--border-radius-md);
+  .team-member-card {
+    background: #151c28;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
-    transition: var(--transition-smooth);
+    transition: all 0.3s ease;
     text-align: center;
   }
 
-  .team-card:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--box-shadow-premium);
+  .team-member-card:hover {
+    transform: translateY(-5px);
+    border-color: #ff6900;
   }
 
-  .card-image {
+  .member-photo-box {
     position: relative;
-    height: 350px;
-    width: 100%;
     overflow: hidden;
   }
 
-  .card-image img {
+  .member-photo-box img {
     width: 100%;
-    height: 100%;
+    height: 380px;
     object-fit: cover;
-    transition: var(--transition-smooth);
+    transition: transform 0.5s ease;
   }
 
-  .team-card:hover .card-image img {
+  .team-member-card:hover .member-photo-box img {
     transform: scale(1.05);
   }
 
-  .socials-overlay {
+  .member-social-shares {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(15, 23, 42, 0.6);
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(21, 28, 40, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px 20px;
+    border-radius: 30px;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    gap: 15px;
+    transition: all 0.3s ease;
     opacity: 0;
-    transition: var(--transition-smooth);
   }
 
-  .team-card:hover .socials-overlay {
+  .team-member-card:hover .member-social-shares {
+    bottom: 20px;
     opacity: 1;
   }
 
-  .social-icons {
-    display: flex;
-    gap: 12px;
-    transform: translateY(20px);
-    transition: var(--transition-smooth);
-  }
-
-  .team-card:hover .social-icons {
-    transform: translateY(0);
-  }
-
-  .social-icon {
-    width: 40px;
-    height: 40px;
-    background-color: var(--color-primary);
+  .social-share-btn {
     color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 13px;
-    transition: var(--transition-smooth);
-  }
-
-  .social-icon:hover {
-    background-color: var(--color-accent);
-    transform: scale(1.1);
-  }
-
-  .card-body {
-    padding: 24px;
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
-  }
-
-  .member-name {
-    font-family: var(--font-heading);
-    font-size: 18px;
-    color: var(--color-secondary);
-    font-weight: 700;
-    margin-bottom: 4px;
-  }
-
-  .member-role {
     font-size: 14px;
-    color: var(--color-primary);
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+
+  .social-share-btn:hover {
+    color: #ff6900;
+  }
+
+  .member-info-box {
+    padding: 25px 20px;
+  }
+
+  .member-title-name {
+    font-family: 'Space Grotesk', sans-serif;
     font-weight: 600;
+    font-size: 20px;
+    color: white;
+    margin: 0 0 5px 0;
+  }
+
+  .member-role-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    color: #ff6900;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    font-weight: 600;
+    letter-spacing: 1px;
   }
 </style>

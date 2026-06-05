@@ -29,35 +29,34 @@ const defaultTestimonials = [
 const testimonials = await querySanity(testimonialsQuery, defaultTestimonials);
 ---
 
-<section class="section testimonials-section">
+<section class="testimonials-area" id="testimonials">
   <div class="container">
-    <div class="section-title-wrapper">
-      <span class="section-subtitle">Client Feedback</span>
-      <h2 class="section-title">What Our Customers Say</h2>
+    <div class="section-title-box text-center">
+      <span class="sub-heading">Client Feedback</span>
+      <h2 class="main-heading text-white">What Our Customers Say</h2>
     </div>
 
-    <!-- Testimonials Swiper -->
+    <!-- Swiper Carousel -->
     <div class="swiper testimonials-swiper">
       <div class="swiper-wrapper">
         {testimonials.map((test) => {
-          const userImg = test.image ? urlFor(test.image) : 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80';
+          const userImg = test.image ? urlFor(test.image) : '/wp-content/uploads/2025/11/testimonial-user.jpg';
           return (
-            <div class="swiper-slide testimonial-slide">
+            <div class="swiper-slide">
               <div class="testimonial-card">
-                <!-- Stars -->
-                <div class="stars">
+                <div class="rating-stars">
                   {Array.from({ length: test.rating || 5 }).map(() => (
-                    <span class="star">★</span>
+                    <i class="fa-solid fa-star"></i>
                   ))}
                 </div>
-                
-                <p class="quote">"{test.quote}"</p>
-                
-                <div class="client-info">
-                  <img src={userImg} alt={test.clientName} class="client-img" />
-                  <div class="client-meta">
-                    <h4 class="client-name">{test.clientName}</h4>
-                    <span class="client-role">{test.role}</span>
+                <p class="testimonial-quote">"{test.quote}"</p>
+                <div class="client-detail-box">
+                  <div class="client-photo">
+                    <img src={userImg} alt={test.clientName} />
+                  </div>
+                  <div class="client-meta-info">
+                    <h4>{test.clientName}</h4>
+                    <span>{test.role}</span>
                   </div>
                 </div>
               </div>
@@ -65,83 +64,90 @@ const testimonials = await querySanity(testimonialsQuery, defaultTestimonials);
           );
         })}
       </div>
-      
-      <!-- Controls -->
-      <div class="swiper-pagination testimonials-pagination"></div>
+      <!-- Pagination -->
+      <div class="swiper-pagination testimonials-pagination-dots"></div>
     </div>
   </div>
 </section>
 
 <style>
-  .testimonials-section {
-    background-color: var(--bg-light);
+  .testimonials-area {
+    padding: 100px 0;
+    background: #090d16;
   }
 
   .testimonials-swiper {
-    padding-bottom: 50px;
     max-width: 800px;
     margin: 0 auto;
+    padding-bottom: 50px;
   }
 
   .testimonial-card {
-    background-color: var(--bg-light-card);
-    padding: 50px 40px;
-    border-radius: var(--border-radius-lg);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+    background: #151c28;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 40px 30px;
+    border-radius: 20px;
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 1px solid rgba(0, 0, 0, 0.02);
   }
 
-  .stars {
-    margin-bottom: 24px;
+  .rating-stars {
+    color: #ff6900;
+    font-size: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 5px;
   }
 
-  .star {
-    color: #f59e0b; /* Golden Yellow */
-    font-size: 20px;
-  }
-
-  .quote {
+  .testimonial-quote {
+    font-family: 'DM Sans', sans-serif;
     font-size: 18px;
-    font-style: italic;
-    color: var(--color-secondary);
-    line-height: 1.8;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.85);
     margin-bottom: 30px;
-    max-width: 650px;
+    font-style: italic;
   }
 
-  .client-info {
+  .client-detail-box {
     display: flex;
     align-items: center;
-    gap: 16px;
-    text-align: left;
+    gap: 15px;
   }
 
-  .client-img {
+  .client-photo img {
     width: 60px;
     height: 60px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid var(--color-primary);
+    border: 2px solid #ff6900;
   }
 
-  .client-name {
-    font-family: var(--font-heading);
-    font-size: 16px;
-    color: var(--color-secondary);
-    font-weight: 700;
+  .client-meta-info {
+    text-align: left;
   }
 
-  .client-role {
-    font-size: 13px;
-    color: var(--text-muted-dark);
+  .client-meta-info h4 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    color: white;
+    margin: 0;
   }
 
-  .testimonials-pagination {
-    bottom: 0 !important;
+  .client-meta-info span {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .testimonials-pagination-dots {
+    position: relative;
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
   }
 </style>
 
@@ -156,7 +162,7 @@ const testimonials = await querySanity(testimonialsQuery, defaultTestimonials);
         disableOnInteraction: false,
       },
       pagination: {
-        el: '.testimonials-pagination',
+        el: '.testimonials-pagination-dots',
         clickable: true,
       }
     });

@@ -1,35 +1,7 @@
 ---
-import { querySanity } from '../utils/sanity';
+import { siteData } from '../data/siteData';
 
-const featureCardsQuery = `*[_type == "featureCard"]{
-  title,
-  description,
-  icon,
-  colorStyle
-}`;
-
-const defaultCards = [
-  {
-    title: 'DesignBuild',
-    description: 'Shaping the future of design',
-    icon: '01',
-    colorStyle: 'orange'
-  },
-  {
-    title: 'Modern Renovation',
-    description: 'Bespoke high-end custom building solutions',
-    icon: '02',
-    colorStyle: 'orange'
-  },
-  {
-    title: 'Interior Design',
-    description: 'Aesthetic spaces tailored to modern lifestyle',
-    icon: '03',
-    colorStyle: 'orange'
-  }
-];
-
-const cards = await querySanity(featureCardsQuery, defaultCards);
+const cards = siteData.featureCards;
 ---
 
 <section class="features-area">

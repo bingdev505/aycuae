@@ -1,71 +1,50 @@
 ---
-import { querySanity, urlFor } from '../utils/sanity';
+import { siteData } from '../data/siteData';
 
-const testimonialsQuery = `*[_type == "testimonial"]{
-  clientName,
-  role,
-  quote,
-  rating,
-  image
-}`;
-
-const defaultTestimonials = [
-  {
-    clientName: 'Sarah Jenkins',
-    role: 'CEO, Jenkins Logistics',
-    quote: 'ConstX remodeled our main corporate headquarters. Their builders were professional, efficient, and finished ahead of schedule. Highly recommended!',
-    rating: 5,
-    image: null
-  },
-  {
-    clientName: 'David Miller',
-    role: 'Home Owner',
-    quote: 'Excellent service! They redesigned our kitchen and built a modern garage addition. The cost was transparent and exactly matched the initial estimate.',
-    rating: 5,
-    image: null
-  }
-];
-
-const testimonials = await querySanity(testimonialsQuery, defaultTestimonials);
+const testimonials = siteData.testimonials;
 ---
 
 <section class="testimonials-area" id="testimonials">
   <div class="container">
-    <div class="section-title-box text-center">
-      <span class="sub-heading">Client Feedback</span>
-      <h2 class="main-heading text-white">What Our Customers Say</h2>
-    </div>
+    <div class="row align-items-center">
+      <!-- Section Headers -->
+      <div class="col-lg-5 col-12 mb-5 mb-lg-0">
+        <div class="section-title-box">
+          <span class="sub-heading">OUR TESTIMONIALS</span>
+          <h2 class="main-heading text-white">Real feedback from those who built their dreams</h2>
+          <p class="about-description">Our commitment to excellence has earned us the trust of homeowners, developers and businesses alike.</p>
+          <a href="/testimonials" class="btn-estimate mt-3">
+            <span>View All Testimonials</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="14" viewBox="0 0 18 14" fill="currentColor">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M16.8065 5.82872C14.3962 5.82872 12.1995 3.54151 12.1995 1.02981V0L10.2223 0V1.02981C10.2223 2.85669 10.9914 4.57028 12.1985 5.82872L0 5.82872L0 7.88833L12.1985 7.88833C10.9914 9.14676 10.2223 10.8604 10.2223 12.6872V13.717H12.1995V12.6872C12.1995 10.1755 14.3962 7.88833 16.8065 7.88833H17.7951V5.82872H16.8065Z"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
 
-    <!-- Swiper Carousel -->
-    <div class="swiper testimonials-swiper">
-      <div class="swiper-wrapper">
-        {testimonials.map((test) => {
-          const userImg = test.image ? urlFor(test.image) : '/wp-content/uploads/2025/11/testimonial-user.jpg';
-          return (
-            <div class="swiper-slide">
-              <div class="testimonial-card">
-                <div class="rating-stars">
-                  {Array.from({ length: test.rating || 5 }).map(() => (
-                    <i class="fa-solid fa-star"></i>
-                  ))}
-                </div>
-                <p class="testimonial-quote">"{test.quote}"</p>
-                <div class="client-detail-box">
-                  <div class="client-photo">
-                    <img src={userImg} alt={test.clientName} />
+      <!-- Testimonials Slides Column -->
+      <div class="col-lg-7 col-12 ps-lg-5">
+        <div class="swiper testimonials-swiper">
+          <div class="swiper-wrapper">
+            {testimonials.map((test) => (
+              <div class="swiper-slide">
+                <div class="testimonial-card">
+                  <div class="client-logo-box mb-4">
+                    <img src={test.companyLogo} alt="Company Logo" class="client-logo-img" />
                   </div>
-                  <div class="client-meta-info">
-                    <h4>{test.clientName}</h4>
-                    <span>{test.role}</span>
+                  <p class="testimonial-quote">“{test.quote}”</p>
+                  <div class="client-meta-info mt-4">
+                    <h4 class="client-name">{test.clientName}</h4>
+                    <span class="client-role">{test.role}</span>
                   </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            ))}
+          </div>
+          <!-- Pagination -->
+          <div class="swiper-pagination testimonials-pagination-dots"></div>
+        </div>
       </div>
-      <!-- Pagination -->
-      <div class="swiper-pagination testimonials-pagination-dots"></div>
     </div>
   </div>
 </section>
@@ -77,8 +56,7 @@ const testimonials = await querySanity(testimonialsQuery, defaultTestimonials);
   }
 
   .testimonials-swiper {
-    max-width: 800px;
-    margin: 0 auto;
+    width: 100%;
     padding-bottom: 50px;
   }
 
@@ -87,48 +65,33 @@ const testimonials = await querySanity(testimonialsQuery, defaultTestimonials);
     border: 1px solid rgba(255, 255, 255, 0.05);
     padding: 40px 30px;
     border-radius: 20px;
-    text-align: center;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    justify-content: space-between;
   }
 
-  .rating-stars {
-    color: #ff6900;
-    font-size: 16px;
-    margin-bottom: 20px;
-    display: flex;
-    gap: 5px;
+  .client-logo-img {
+    height: 30px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.8;
   }
 
   .testimonial-quote {
     font-family: 'DM Sans', sans-serif;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 1.7;
     color: rgba(255, 255, 255, 0.85);
-    margin-bottom: 30px;
+    margin: 0;
     font-style: italic;
-  }
-
-  .client-detail-box {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-  }
-
-  .client-photo img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #ff6900;
   }
 
   .client-meta-info {
     text-align: left;
   }
 
-  .client-meta-info h4 {
+  .client-name {
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 600;
     font-size: 18px;
@@ -136,10 +99,58 @@ const testimonials = await querySanity(testimonialsQuery, defaultTestimonials);
     margin: 0;
   }
 
-  .client-meta-info span {
+  .client-role {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 14px;
     color: rgba(255, 255, 255, 0.5);
+  }
+
+  .sub-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    color: #ff6900;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    display: block;
+    margin-bottom: 15px;
+  }
+
+  .main-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 25px;
+  }
+
+  .about-description {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 35px;
+  }
+
+  .btn-estimate {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #ff6900;
+    color: white;
+    padding: 16px 35px;
+    border-radius: 30px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+
+  .btn-estimate:hover {
+    background: white;
+    color: #1a1a1a;
   }
 
   .testimonials-pagination-dots {
@@ -148,6 +159,12 @@ const testimonials = await querySanity(testimonialsQuery, defaultTestimonials);
     display: flex;
     justify-content: center;
     gap: 8px;
+  }
+
+  @media (max-width: 991px) {
+    .main-heading {
+      font-size: 32px;
+    }
   }
 </style>
 
@@ -164,6 +181,11 @@ const testimonials = await querySanity(testimonialsQuery, defaultTestimonials);
       pagination: {
         el: '.testimonials-pagination-dots',
         clickable: true,
+      },
+      breakpoints: {
+        768: {
+          slidesPerView: 2,
+        }
       }
     });
   });

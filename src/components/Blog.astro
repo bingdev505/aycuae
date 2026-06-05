@@ -1,48 +1,7 @@
 ---
-import { querySanity, urlFor } from '../utils/sanity';
+import { siteData } from '../data/siteData';
 
-const blogQuery = `*[_type == "post"] | order(publishDate desc)[0..2]{
-  title,
-  "slug": slug.current,
-  publishDate,
-  excerpt,
-  coverImage
-}`;
-
-const defaultPosts = [
-  {
-    title: 'Top 5 Material Selection Standards for Heavy Building Projects',
-    slug: 'top-material-standards',
-    publishDate: '2026-06-01',
-    excerpt: 'Selecting materials for building is crucial. Learn the top structural criteria to inspect for durable safety standards.',
-    coverImage: null
-  },
-  {
-    title: 'Minimalist Interior Design Trends to Revitalize Modern Living Rooms',
-    slug: 'minimalist-interior-design-trends',
-    publishDate: '2026-05-28',
-    excerpt: 'Reimagine space using glass, metallic layouts, and ambient lights to give an open-concept premium look.',
-    coverImage: null
-  },
-  {
-    title: 'Why Quality Auditing Prevents Structural Leaks in Commercial Pools',
-    slug: 'quality-audits-leaks',
-    publishDate: '2026-05-15',
-    excerpt: 'Cracks and moisture leaks are costly. Read our comprehensive guide on engineering barriers and proof testing.',
-    coverImage: null
-  }
-];
-
-const posts = await querySanity(blogQuery, defaultPosts);
-
-function formatDate(dateStr: string) {
-  try {
-    const d = new Date(dateStr);
-    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-  } catch (e) {
-    return dateStr;
-  }
-}
+const posts = siteData.blog;
 ---
 
 <section class="blog-area" id="blog">
@@ -54,13 +13,12 @@ function formatDate(dateStr: string) {
 
     <div class="row">
       {posts.map((post) => {
-        const coverUrl = post.coverImage ? urlFor(post.coverImage) : '/wp-content/uploads/2025/11/blog-bg.jpg';
         return (
           <div class="col-lg-4 col-md-6 col-12 mb-4">
             <article class="blog-card-item">
               <div class="blog-photo-box">
-                <img src={coverUrl} alt={post.title} class="img-fluid" />
-                <span class="blog-date-badge">{formatDate(post.publishDate)}</span>
+                <img src={post.coverImage} alt={post.title} class="img-fluid" />
+                <span class="blog-date-badge">{post.publishDate}</span>
               </div>
               <div class="blog-info-box">
                 <h3 class="blog-card-title"><a href="#contact">{post.title}</a></h3>

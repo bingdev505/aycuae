@@ -1,60 +1,7 @@
 ---
-import { querySanity, urlFor } from '../utils/sanity';
+import { siteData } from '../data/siteData';
 
-const servicesQuery = `*[_type == "service"]{
-  title,
-  "slug": slug.current,
-  description,
-  icon,
-  image
-}`;
-
-const defaultServices = [
-  {
-    title: 'General Contracting',
-    slug: 'general-contracting',
-    description: 'A-to-Z construction project management, permitting, subcontracting, and safety execution.',
-    icon: 'fa-solid fa-helmet-safety',
-    image: null
-  },
-  {
-    title: 'Building Architecture',
-    slug: 'building-architecture',
-    description: 'Creative and modern structural drafts, blueprints, and architectural engineering blueprints.',
-    icon: 'fa-solid fa-compass-drafting',
-    image: null
-  },
-  {
-    title: 'Interior Design',
-    slug: 'interior-design',
-    description: 'Bespoke custom layouts, premium furniture mapping, lighting aesthetics, and finishes.',
-    icon: 'fa-solid fa-couch',
-    image: null
-  },
-  {
-    title: 'House Renovation',
-    slug: 'house-renovation',
-    description: 'Modern room additions, kitchen modeling, bathroom repairs, and full house remodeling.',
-    icon: 'fa-solid fa-hammer',
-    image: null
-  },
-  {
-    title: 'Metal Roofing',
-    slug: 'metal-roofing',
-    description: 'Highly durable weather-resistant metallic roof structures, insulation, and repair works.',
-    icon: 'fa-solid fa-trowel-bricks',
-    image: null
-  },
-  {
-    title: 'Property Maintenance',
-    slug: 'property-maintenance',
-    description: 'Routine structural integrity checks, electrical audits, plumbing, and wear-and-tear fixes.',
-    icon: 'fa-solid fa-wrench',
-    image: null
-  }
-];
-
-const services = await querySanity(servicesQuery, defaultServices);
+const services = siteData.services;
 ---
 
 <section class="services-area" id="services">
@@ -66,7 +13,7 @@ const services = await querySanity(servicesQuery, defaultServices);
 
     <div class="row">
       {services.map((service) => {
-        const bgUrl = service.image ? urlFor(service.image) : '/wp-content/uploads/2025/11/service-bg.jpg';
+        const bgUrl = '/wp-content/uploads/2025/11/service-bg.jpg';
         return (
           <div class="col-lg-4 col-md-6 col-12 mb-4">
             <div class="service-item-card" style={`background-image: linear-gradient(rgba(21, 28, 40, 0.9), rgba(21, 28, 40, 0.9)), url(${bgUrl});`}>
@@ -76,7 +23,7 @@ const services = await querySanity(servicesQuery, defaultServices);
               <h3 class="service-card-title">{service.title}</h3>
               <p class="service-card-desc">{service.description}</p>
               <div class="service-card-footer">
-                <a href="#contact" class="read-more-btn">
+                <a href="/contact-us" class="read-more-btn">
                   <span>Read More</span>
                   <i class="fa-solid fa-arrow-right-long"></i>
                 </a>

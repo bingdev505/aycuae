@@ -1,35 +1,11 @@
 ---
-import { querySanity, urlFor } from '../utils/sanity';
+import { siteData } from '../data/siteData';
 
-const aboutSectionQuery = `*[_type == "aboutSection"][0]{
-  badgeTitle,
-  badgeSubtitle,
-  title,
-  description,
-  featuresList,
-  youtubeUrl,
-  image
-}`;
-
-const defaultAbout = {
-  badgeTitle: '25+',
-  badgeSubtitle: 'Years of Experience',
-  title: 'We are Professional Builders and Contractors since 1996',
-  description: 'With over three decades of building and construction engineering experience, we design and construct residential, commercial, and industrial facilities. We pride ourselves on engineering safety, building durability, and premium finishes.',
-  featuresList: [
-    'Certified structural engineers & planners',
-    'Premium quality raw materials and modern tools',
-    'Accurate blueprints and cost estimation',
-    'On-time delivery and strict adherence to deadlines'
-  ],
-  youtubeUrl: 'https://www.youtube.com/watch?v=Y-x0efG1seA',
-  image: null
-};
-
-const about = await querySanity(aboutSectionQuery, defaultAbout);
-const imageUrl = about.image ? urlFor(about.image) : '/wp-content/uploads/2025/11/about-img.jpg';
+const about = siteData.about;
+const est = about.estimateBox;
 ---
 
+<!-- 1. Main About Section -->
 <section class="about-area" id="about">
   <div class="container">
     <div class="row align-items-center">
@@ -37,7 +13,7 @@ const imageUrl = about.image ? urlFor(about.image) : '/wp-content/uploads/2025/1
       <div class="col-lg-6 col-12 mb-5 mb-lg-0">
         <div class="about-img-box">
           <div class="about-main-img">
-            <img src={imageUrl} alt="About Us" class="img-fluid rounded-4" />
+            <img src={about.image} alt="About Us" class="img-fluid rounded-4" />
           </div>
           <!-- Video play trigger inside image -->
           <div class="about-video-btn">
@@ -64,10 +40,20 @@ const imageUrl = about.image ? urlFor(about.image) : '/wp-content/uploads/2025/1
           </div>
           <p class="about-description">{about.description}</p>
 
+          <!-- Bullets list -->
+          <ul class="about-bullets">
+            {about.bullets.map((bullet) => (
+              <li>
+                <i class="fa-solid fa-square-full bullet-icon"></i>
+                <span>{bullet}</span>
+              </li>
+            ))}
+          </ul>
+
           <!-- Accordion list -->
           <div class="about-accordion" id="aboutAccordion">
             <div class="accordion-card active">
-              <div class="accordion-header" id="headingOne">
+              <div class="accordion-header">
                 <button class="accordion-btn" type="button">
                   <span>Our Professional Mission</span>
                   <i class="fa-solid fa-plus icon-toggle"></i>
@@ -81,7 +67,7 @@ const imageUrl = about.image ? urlFor(about.image) : '/wp-content/uploads/2025/1
             </div>
 
             <div class="accordion-card">
-              <div class="accordion-header" id="headingTwo">
+              <div class="accordion-header">
                 <button class="accordion-btn" type="button">
                   <span>Eco-Friendly Engineering Standards</span>
                   <i class="fa-solid fa-plus icon-toggle"></i>
@@ -95,7 +81,7 @@ const imageUrl = about.image ? urlFor(about.image) : '/wp-content/uploads/2025/1
             </div>
 
             <div class="accordion-card">
-              <div class="accordion-header" id="headingThree">
+              <div class="accordion-header">
                 <button class="accordion-btn" type="button">
                   <span>Guaranteed Quality Assurance</span>
                   <i class="fa-solid fa-plus icon-toggle"></i>
@@ -114,7 +100,73 @@ const imageUrl = about.image ? urlFor(about.image) : '/wp-content/uploads/2025/1
   </div>
 </section>
 
+<!-- 2. Estimate Callout & Metrics Section -->
+<section class="estimate-callout-area">
+  <div class="container">
+    <div class="row align-items-center">
+      <!-- Left Column: Request Estimate -->
+      <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
+        <div class="estimate-request-box">
+          <span class="est-subtitle">{est.subtitle}</span>
+          <h3 class="est-title">{est.title}</h3>
+          <a href={est.buttonUrl} class="btn-est-estimate">
+            <span>{est.buttonText}</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="14" viewBox="0 0 18 14" fill="currentColor">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M16.8065 5.82872C14.3962 5.82872 12.1995 3.54151 12.1995 1.02981V0L10.2223 0V1.02981C10.2223 2.85669 10.9914 4.57028 12.1985 5.82872L0 5.82872L0 7.88833L12.1985 7.88833C10.9914 9.14676 10.2223 10.8604 10.2223 12.6872V13.717H12.1995V12.6872C12.1995 10.1755 14.3962 7.88833 16.8065 7.88833H17.7951V5.82872H16.8065Z"></path>
+            </svg>
+          </a>
+          <div class="est-img mt-4">
+            <img src={est.image} alt="Estimate Graphic" class="img-fluid" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Middle Column: Counter -->
+      <div class="col-lg-4 col-md-12 mb-4 mb-lg-0 text-center">
+        <div class="estimate-counter-box">
+          <div class="counter-number">
+            <span>{est.counterNum}</span><span class="plus-sign">+</span>
+          </div>
+          <h4 class="counter-title">{est.counterTitle}</h4>
+          <p class="counter-desc">{est.counterDesc}</p>
+          <div class="tags-row mt-4">
+            {est.tags.map(tag => (
+              <span class="tag-badge">{tag}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Ratings & Quotes -->
+      <div class="col-lg-4 col-md-12">
+        <div class="estimate-rating-box">
+          <div class="rating-user mb-4">
+            <img src="/wp-content/uploads/2025/11/author-1.jpg" alt="Author" class="author-img" />
+            <div class="phone-icon-box">
+              <i class="fa-solid fa-phone"></i>
+            </div>
+          </div>
+          <p class="rating-text-quote">From vision to structure - <a href="/contact-us"><strong>Where Creativity Meets Construction Excellence.</strong></a></p>
+          
+          <div class="rating-metric mt-4">
+            <div class="metric-score">4.9/5</div>
+            <div class="stars-group">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <span class="reviews-count">Our 4,200 Reviews</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <style>
+  /* 1. About Style */
   .about-area {
     padding: 100px 0;
     background: #090d16;
@@ -216,6 +268,29 @@ const imageUrl = about.image ? urlFor(about.image) : '/wp-content/uploads/2025/1
     margin-bottom: 35px;
   }
 
+  .about-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 30px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .about-bullets li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    color: white;
+  }
+
+  .bullet-icon {
+    font-size: 8px;
+    color: #ff6900;
+  }
+
   /* Accordion styles */
   .about-accordion {
     display: flex;
@@ -275,6 +350,180 @@ const imageUrl = about.image ? urlFor(about.image) : '/wp-content/uploads/2025/1
   .accordion-card.active .icon-toggle {
     transform: rotate(45deg);
     color: #ff6900;
+  }
+
+  /* 2. Estimate Callout Style */
+  .estimate-callout-area {
+    padding: 80px 0;
+    background: #0d131f;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    color: white;
+  }
+
+  .estimate-request-box {
+    background: #151c28;
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .est-subtitle {
+    font-family: 'Space Grotesk', sans-serif;
+    color: #ff6900;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .est-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 25px;
+  }
+
+  .btn-est-estimate {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #ff6900;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .btn-est-estimate:hover {
+    background: white;
+    color: #1a1a1a;
+  }
+
+  /* Counter Box */
+  .estimate-counter-box {
+    background: #151c28;
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    height: 100%;
+  }
+
+  .counter-number {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 64px;
+    font-weight: 700;
+    color: #ff6900;
+    line-height: 1;
+    margin-bottom: 15px;
+  }
+
+  .counter-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  .counter-desc {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .tags-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .tag-badge {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 8px 15px;
+    border-radius: 30px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  /* Rating Box */
+  .estimate-rating-box {
+    background: #151c28;
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    height: 100%;
+  }
+
+  .rating-user {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .author-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+  }
+
+  .phone-icon-box {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #ff6900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+
+  .rating-text-quote {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .rating-text-quote a {
+    color: white;
+    text-decoration: none;
+  }
+
+  .rating-text-quote a:hover {
+    color: #ff6900;
+  }
+
+  .rating-metric {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .metric-score {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #ff6900;
+  }
+
+  .stars-group {
+    color: #ff6900;
+    font-size: 14px;
+    display: flex;
+    gap: 3px;
+    margin: 5px 0;
+  }
+
+  .reviews-count {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
   }
 
   @media (max-width: 991px) {

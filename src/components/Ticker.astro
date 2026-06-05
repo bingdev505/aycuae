@@ -1,0 +1,72 @@
+---
+import { siteData } from '../data/siteData';
+
+const items = siteData.tickerItems;
+---
+
+<div class="ticker-section">
+  <div class="marquee-container">
+    <div class="marquee-track">
+      <!-- Duplicate items to create infinite scroll loop effect -->
+      {[...items, ...items, ...items, ...items].map((item) => (
+        <div class="marquee-item">
+          <img src="/wp-content/uploads/2025/11/icon-asterisk.svg" alt="asterisk" class="asterisk-icon" />
+          <span class="ticker-text">{item}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  .ticker-section {
+    background: #ff6900;
+    padding: 30px 0;
+    overflow: hidden;
+    position: relative;
+    z-index: 10;
+  }
+
+  .marquee-container {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+    white-space: nowrap;
+    animation: scrollMarquee 25s linear infinite;
+  }
+
+  .marquee-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .asterisk-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .ticker-text {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  @keyframes scrollMarquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+</style>

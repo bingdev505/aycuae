@@ -1,26 +1,7 @@
 ---
-import { querySanity, urlFor } from '../utils/sanity';
+import { siteData } from '../data/siteData';
 
-const siteSettingsQuery = `*[_type == "siteSettings"][0]{
-  siteTitle,
-  phone,
-  email,
-  address,
-  footerAbout,
-  logo
-}`;
-
-const defaultSettings = {
-  siteTitle: 'Renovex',
-  phone: '+0044 9922299',
-  email: 'info@renovex.com',
-  address: '22 Sterling Close, Winchester, W23 4FD',
-  footerAbout: 'Renovex is a premium construction, building, and renovation contractor offering high-quality architectural, design, and remodeling solutions.',
-  logo: null
-};
-
-const settings = await querySanity(siteSettingsQuery, defaultSettings);
-const logoUrl = settings.logo ? urlFor(settings.logo) : '/wp-content/uploads/2025/11/logo.svg';
+const settings = siteData.settings;
 ---
 
 <footer class="footer-section" id="contact">
@@ -30,7 +11,7 @@ const logoUrl = settings.logo ? urlFor(settings.logo) : '/wp-content/uploads/202
       <div class="col-lg-4 col-md-6 col-12 mb-5 mb-lg-0">
         <div class="footer-about-box">
           <div class="footer-logo mb-4">
-            <img src={logoUrl} alt={settings.siteTitle} class="img-fluid" />
+            <img src={settings.logo} alt={settings.siteTitle} class="img-fluid" />
           </div>
           <p class="footer-desc-text">{settings.footerAbout}</p>
           <div class="footer-contact-details mt-4">
@@ -65,10 +46,10 @@ const logoUrl = settings.logo ? urlFor(settings.logo) : '/wp-content/uploads/202
           <h3 class="footer-col-title">Quick Links</h3>
           <ul class="footer-menu-links">
             <li><a href="/">Home</a></li>
-            <li><a href="#about">About Us</a></li>
-            <li><a href="#services">Our Services</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#testimonials">Testimonials</a></li>
+            <li><a href="/about-us">About Us</a></li>
+            <li><a href="/services">Our Services</a></li>
+            <li><a href="/projects">Projects</a></li>
+            <li><a href="/testimonials">Testimonials</a></li>
           </ul>
         </div>
       </div>

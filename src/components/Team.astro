@@ -1,43 +1,7 @@
 ---
-import { querySanity, urlFor } from '../utils/sanity';
+import { siteData } from '../data/siteData';
 
-const teamQuery = `*[_type == "teamMember"]{
-  name,
-  role,
-  facebookUrl,
-  twitterUrl,
-  instagramUrl,
-  image
-}`;
-
-const defaultTeam = [
-  {
-    name: 'Robert Carter',
-    role: 'Chief Architect',
-    facebookUrl: '#',
-    twitterUrl: '#',
-    instagramUrl: '#',
-    image: null
-  },
-  {
-    name: 'Alex Martinez',
-    role: 'Site Supervisor',
-    facebookUrl: '#',
-    twitterUrl: '#',
-    instagramUrl: '#',
-    image: null
-  },
-  {
-    name: 'Michael Chen',
-    role: 'Structural Engineer',
-    facebookUrl: '#',
-    twitterUrl: '#',
-    instagramUrl: '#',
-    image: null
-  }
-];
-
-const team = await querySanity(teamQuery, defaultTeam);
+const team = siteData.team;
 ---
 
 <section class="team-area" id="team">
@@ -48,8 +12,8 @@ const team = await querySanity(teamQuery, defaultTeam);
     </div>
 
     <div class="row">
-      {team.map((member) => {
-        const profileImg = member.image ? urlFor(member.image) : '/wp-content/uploads/2025/11/team-member.jpg';
+      {team.map((member, index) => {
+        const profileImg = `/wp-content/uploads/2025/11/team-${index + 1}.jpg`;
         return (
           <div class="col-lg-4 col-md-6 col-12 mb-4">
             <div class="team-member-card">

@@ -1,26 +1,8 @@
 ---
-import { querySanity, urlFor } from '../utils/sanity';
+import { siteData } from '../data/siteData';
 
-const heroSlidesQuery = `*[_type == "heroSlide"][0]{
-  subtitle,
-  title,
-  description,
-  buttonText,
-  buttonUrl,
-  bgImage
-}`;
-
-const defaultHero = {
-  subtitle: 'WHERE CREATIVITY MEETS STRUCTURAL MASTERY',
-  title: 'Where innovative design meet precision construction to create spaces that inspire and endure',
-  description: 'Our approach unites visionary architecture with flawless construction execution. From concept to completion, we build environments that tell a story of innovation, precision, and enduring quality.',
-  buttonText: 'Get Free Estimate',
-  buttonUrl: '#contact',
-  bgImage: null
-};
-
-const hero = await querySanity(heroSlidesQuery, defaultHero);
-const bgUrl = hero.bgImage ? urlFor(hero.bgImage) : '/wp-content/uploads/2025/11/hero-bg.jpg';
+const hero = siteData.hero;
+const bgUrl = hero.bgImage;
 ---
 
 <section class="hero-area" style={`background-image: url(${bgUrl});`}>
@@ -41,7 +23,7 @@ const bgUrl = hero.bgImage ? urlFor(hero.bgImage) : '/wp-content/uploads/2025/11
             </a>
             
             <div class="hero-video-box">
-              <a class="video-btn popup-youtube" href="https://www.youtube.com/watch?v=Y-x0efG1seA" aria-label="Play video">
+              <a class="video-btn popup-youtube" href={hero.youtubeUrl} aria-label="Play video">
                 <i class="fas fa-play"></i>
               </a>
               <span class="video-text">Watch Our Video</span>

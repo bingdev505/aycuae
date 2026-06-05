@@ -1,5 +1,5 @@
 ---
-import { querySanity, urlFor } from '../utils/sanity';
+import { siteData } from '../data/siteData';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
@@ -8,36 +8,12 @@ interface Props {
   description?: string;
 }
 
-const seoQuery = `*[_type == "siteSettings"][0]{
-  siteTitle,
-  metaDescription,
-  metaKeywords,
-  ogImage,
-  googleAnalyticsId,
-  metaPixelId,
-  customHeaderScripts,
-  customBodyScripts
-}`;
-
-const defaultSeo = {
-  siteTitle: 'Renovex | Premium Construction & Home Renovation',
-  metaDescription: 'Renovex is a premium, modern construction, renovation, and building contractor offering high-quality structural and design solutions.',
-  metaKeywords: 'construction, renovation, builder, architect, design, contractor, engineering',
-  ogImage: null,
-  googleAnalyticsId: null,
-  metaPixelId: null,
-  customHeaderScripts: null,
-  customBodyScripts: null
-};
-
-const seo = await querySanity(seoQuery, defaultSeo);
-
 const { 
-  title = seo.siteTitle || defaultSeo.siteTitle, 
-  description = seo.metaDescription || defaultSeo.metaDescription 
+  title = siteData.settings.siteTitle, 
+  description = siteData.settings.footerAbout 
 } = Astro.props;
 
-const ogImageUrl = seo.ogImage ? urlFor(seo.ogImage) : 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1200&h=630&q=80';
+const ogImageUrl = '/wp-content/uploads/2025/11/hero-bg.jpg';
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site || 'https://aycuae.pages.dev');
 ---
 
@@ -52,7 +28,7 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site || 'https://aycuae.p
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
-    <meta name="keywords" content={seo.metaKeywords || defaultSeo.metaKeywords} />
+    <meta name="keywords" content="construction, renovation, builder, architect, design, contractor, engineering" />
     <link rel="canonical" href={canonicalUrl.href} />
     
     <!-- Open Graph / Facebook -->
@@ -79,50 +55,9 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site || 'https://aycuae.p
     <link rel="stylesheet" href="/css/all.min.css" />
     <link rel="stylesheet" href="/css/css-variable.css" />
     <link rel="stylesheet" href="/css/style.css" />
-
-    <!-- Google Analytics Integration -->
-    {seo.googleAnalyticsId && (
-      <>
-        <script async src={`https://www.googletagmanager.com/gtag/js?id=${seo.googleAnalyticsId}`}></script>
-        <script is:inline define:vars={{ gaId: seo.googleAnalyticsId }}>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', gaId);
-        </script>
-      </>
-    )}
-
-    <!-- Meta (Facebook) Pixel Integration -->
-    {seo.metaPixelId && (
-      <script is:inline define:vars={{ pixelId: seo.metaPixelId }}>
-        !function(f,b,e,v,n,t,s)
-        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-        n.queue=[];t=b.createElement(e);t.async=!0;
-        t.src=v;s=b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t,s)}(window, document,'script',
-        'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', pixelId);
-        fbq('track', 'PageView');
-      </script>
-    )}
-
-    <!-- Custom Header Scripts Dynamic Integration -->
-    {seo.customHeaderScripts && <Fragment set:html={seo.customHeaderScripts} />}
   </head>
   <body class="home wp-singular page-template page-template-elementor_header_footer page page-id-67 wp-custom-logo wp-theme-renovex tt-magic-cursor fancy-scrollbar elementor-default elementor-template-full-width elementor-kit-13 elementor-page elementor-page-67">
-    <!-- Meta Pixel NoScript Fallback -->
-    {seo.metaPixelId && (
-      <noscript>
-        <img height="1" width="1" style="display:none" src={`https://www.facebook.com/tr?id=${seo.metaPixelId}&ev=PageView&noscript=1`} />
-      </noscript>
-    )}
-
-    <!-- Custom Body Scripts Dynamic Integration -->
-    {seo.customBodyScripts && <Fragment set:html={seo.customBodyScripts} />}
-
+    
     <!-- Theme Preloader -->
     <div class="theme-preloader">
       <div class="loading-container">

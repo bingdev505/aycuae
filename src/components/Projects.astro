@@ -1,41 +1,7 @@
 ---
-import { querySanity, urlFor } from '../utils/sanity';
+import { siteData } from '../data/siteData';
 
-const projectsQuery = `*[_type == "project"]{
-  title,
-  "slug": slug.current,
-  category,
-  image
-}`;
-
-const defaultProjects = [
-  {
-    title: 'Modern Residential Complex',
-    category: 'Building',
-    slug: 'modern-residential',
-    image: null
-  },
-  {
-    title: 'Skyline Business Tower',
-    category: 'Architecture',
-    slug: 'skyline-business-tower',
-    image: null
-  },
-  {
-    title: 'Industrial Factory Plant',
-    category: 'Infrastructure',
-    slug: 'industrial-factory-plant',
-    image: null
-  },
-  {
-    title: 'Luxury Eco Villa',
-    category: 'Renovation',
-    slug: 'luxury-eco-villa',
-    image: null
-  }
-];
-
-const projects = await querySanity(projectsQuery, defaultProjects);
+const projects = siteData.projects;
 ---
 
 <section class="portfolio-area" id="projects">
@@ -49,17 +15,16 @@ const projects = await querySanity(projectsQuery, defaultProjects);
     <div class="swiper projects-swiper">
       <div class="swiper-wrapper">
         {projects.map((project) => {
-          const imgUrl = project.image ? urlFor(project.image) : '/wp-content/uploads/2025/11/project-img.jpg';
           return (
             <div class="swiper-slide">
               <div class="portfolio-card">
                 <div class="portfolio-img">
-                  <img src={imgUrl} alt={project.title} class="img-fluid" />
+                  <img src={project.image} alt={project.title} class="img-fluid" />
                 </div>
                 <div class="portfolio-content">
                   <span class="portfolio-cat">{project.category}</span>
                   <h3 class="portfolio-title">{project.title}</h3>
-                  <a href="#contact" class="portfolio-link-btn" aria-label="View Project">
+                  <a href="/contact-us" class="portfolio-link-btn" aria-label="View Project">
                     <i class="fa-solid fa-arrow-right-long"></i>
                   </a>
                 </div>

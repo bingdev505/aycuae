@@ -1,0 +1,206 @@
+---
+import { siteData } from '../data/siteData';
+
+const pricingPlans = siteData.pricing;
+---
+
+<section class="pricing-area" id="pricing">
+  <div class="container">
+    <div class="section-title-box text-center">
+      <span class="sub-heading">OUR PRICING PLANS</span>
+      <h2 class="main-heading text-white">Tailored architectural and construction solutions for every budget</h2>
+    </div>
+
+    <div class="row justify-content-center">
+      {pricingPlans.map((plan) => (
+        <div class="col-lg-4 col-md-6 col-12 mb-4">
+          <div class={`pricing-card-box ${plan.popular ? 'popular-card' : ''}`}>
+            {plan.popular && <span class="badge-popular">Most Popular</span>}
+            <div class="pricing-header">
+              <div class="pricing-icon"><i class={plan.icon}></i></div>
+              <h3 class="plan-title">{plan.title}</h3>
+              <div class="price-value">
+                <h2>{plan.price} <span>{plan.period}</span></h2>
+              </div>
+            </div>
+            <div class="pricing-body">
+              <h4 class="inc-title">What's Included:</h4>
+              <ul class="included-list">
+                {plan.features.map((feat) => (
+                  <li>
+                    <i class="fa-solid fa-square-full feat-bullet"></i>
+                    <span>{feat}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div class="pricing-footer mt-4">
+              <a href="/contact-us" class="btn-price-action">
+                <span>Get Started With Plan</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="14" viewBox="0 0 18 14" fill="currentColor">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M16.8065 5.82872C14.3962 5.82872 12.1995 3.54151 12.1995 1.02981V0L10.2223 0V1.02981C10.2223 2.85669 10.9914 4.57028 12.1985 5.82872L0 5.82872L0 7.88833L12.1985 7.88833C10.9914 9.14676 10.2223 10.8604 10.2223 12.6872V13.717H12.1995V12.6872C12.1995 10.1755 14.3962 7.88833 16.8065 7.88833H17.7951V5.82872H16.8065Z"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .pricing-area {
+    padding: 100px 0;
+    background: #0d131f;
+  }
+
+  .pricing-card-box {
+    background: #151c28;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 45px 35px;
+    border-radius: 20px;
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+  }
+
+  .pricing-card-box:hover {
+    transform: translateY(-5px);
+    border-color: #ff6900;
+  }
+
+  .popular-card {
+    border-color: #ff6900;
+    background: #192231;
+  }
+
+  .badge-popular {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #ff6900;
+    color: white;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 20px;
+    text-transform: uppercase;
+  }
+
+  .pricing-icon {
+    font-size: 28px;
+    color: #ff6900;
+    margin-bottom: 20px;
+  }
+
+  .plan-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 10px;
+  }
+
+  .price-value h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 38px;
+    font-weight: 700;
+    color: white;
+    margin: 0;
+  }
+
+  .price-value span {
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .inc-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    margin: 25px 0 15px 0;
+  }
+
+  .included-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .included-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .feat-bullet {
+    font-size: 6px;
+    color: #ff6900;
+  }
+
+  .btn-price-action {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    padding: 14px 25px;
+    border-radius: 30px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .pricing-card-box:hover .btn-price-action,
+  .popular-card .btn-price-action {
+    background: #ff6900;
+  }
+
+  .btn-price-action:hover {
+    background: white !important;
+    color: #1a1a1a;
+  }
+
+  .sub-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    color: #ff6900;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    display: block;
+    margin-bottom: 15px;
+  }
+
+  .main-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 50px;
+  }
+
+  @media (max-width: 991px) {
+    .main-heading {
+      font-size: 32px;
+    }
+  }
+</style>

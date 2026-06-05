@@ -1,0 +1,187 @@
+---
+import { siteData } from '../data/siteData';
+
+const faqs = siteData.faqs;
+---
+
+<section class="faqs-area" id="faqs">
+  <div class="container">
+    <div class="row align-items-center">
+      <!-- Title & CTA Column -->
+      <div class="col-lg-5 col-12 mb-5 mb-lg-0">
+        <div class="section-title-box">
+          <span class="sub-heading">Frequently Asked Questions</span>
+          <h2 class="main-heading text-white">Have questions about our building process?</h2>
+          <p class="about-description">We combine transparent practices, certified construction experts, and tailored budget plans to make your build stress-free.</p>
+          <a href="/contact-us" class="btn-estimate mt-3">
+            <span>Contact Our Team</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="14" viewBox="0 0 18 14" fill="currentColor">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M16.8065 5.82872C14.3962 5.82872 12.1995 3.54151 12.1995 1.02981V0L10.2223 0V1.02981C10.2223 2.85669 10.9914 4.57028 12.1985 5.82872L0 5.82872L0 7.88833L12.1985 7.88833C10.9914 9.14676 10.2223 10.8604 10.2223 12.6872V13.717H12.1995V12.6872C12.1995 10.1755 14.3962 7.88833 16.8065 7.88833H17.7951V5.82872H16.8065Z"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- FAQ Accordion Column -->
+      <div class="col-lg-7 col-12 ps-lg-5">
+        <div class="faq-accordion" id="faqAccordionGroup">
+          {faqs.map((faq, index) => (
+            <div class={`faq-card ${index === 0 ? 'active' : ''}`}>
+              <div class="faq-header">
+                <button class="faq-btn" type="button">
+                  <span class="faq-question-text">{faq.question}</span>
+                  <i class="fa-solid fa-plus faq-toggle-icon"></i>
+                </button>
+              </div>
+              <div class="faq-collapse">
+                <div class="faq-body">
+                  {faq.answer}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .faqs-area {
+    padding: 100px 0;
+    background: #090d16;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .faq-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .faq-card {
+    background: #151c28;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .faq-card.active {
+    border-color: #ff6900;
+  }
+
+  .faq-btn {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .faq-collapse {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+
+  .faq-card.active .faq-collapse {
+    max-height: 250px;
+  }
+
+  .faq-body {
+    padding: 0 22px 22px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .faq-toggle-icon {
+    transition: transform 0.3s ease;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .faq-card.active .faq-toggle-icon {
+    transform: rotate(45deg);
+    color: #ff6900;
+  }
+
+  .sub-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    color: #ff6900;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    display: block;
+    margin-bottom: 15px;
+  }
+
+  .main-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 25px;
+  }
+
+  .about-description {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 35px;
+  }
+
+  .btn-estimate {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #ff6900;
+    color: white;
+    padding: 16px 35px;
+    border-radius: 30px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+
+  .btn-estimate:hover {
+    background: white;
+    color: #1a1a1a;
+  }
+
+  @media (max-width: 991px) {
+    .main-heading {
+      font-size: 32px;
+    }
+  }
+</style>
+
+<script>
+  const faqCards = document.querySelectorAll('.faq-card');
+  faqCards.forEach(card => {
+    const btn = card.querySelector('.faq-btn');
+    if (btn) {
+      btn.addEventListener('click', () => {
+        const isActive = card.classList.contains('active');
+        faqCards.forEach(c => c.classList.remove('active'));
+        if (!isActive) {
+          card.classList.add('active');
+        }
+      });
+    }
+  });
+</script>

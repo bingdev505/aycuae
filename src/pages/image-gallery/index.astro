@@ -1,0 +1,99 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageBanner from '../../components/PageBanner.astro';
+
+const images = [
+  '/wp-content/uploads/2025/11/project-image-1.jpg',
+  '/wp-content/uploads/2025/11/project-image-2.jpg',
+  '/wp-content/uploads/2025/11/project-image-3.jpg',
+  '/wp-content/uploads/2025/11/project-image-4.jpg',
+  '/wp-content/uploads/2025/11/project-image-5.jpg',
+  '/wp-content/uploads/2025/11/project-image-6.jpg'
+];
+---
+
+<Layout title="Image Gallery - Renovex Construction and Architecture">
+  <PageBanner title="Image Gallery" activePage="Image Gallery" />
+
+  <section class="gallery-area">
+    <div class="container">
+      <div class="row">
+        {images.map((img, index) => (
+          <div class="col-lg-4 col-md-6 col-12 mb-4">
+            <div class="gallery-photo-item">
+              <img src={img} alt={`Gallery Photo ${index + 1}`} class="img-fluid rounded-4" />
+              <div class="gallery-photo-overlay">
+                <a href={img} class="lightbox-trigger" aria-label="Expand image">
+                  <i class="fa-solid fa-plus"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .gallery-area {
+    padding: 100px 0;
+    background: #090d16;
+  }
+
+  .gallery-photo-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .gallery-photo-item img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .gallery-photo-item:hover img {
+    transform: scale(1.05);
+  }
+
+  .gallery-photo-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(21, 28, 40, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+
+  .gallery-photo-item:hover .gallery-photo-overlay {
+    opacity: 1;
+  }
+
+  .lightbox-trigger {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: #ff6900;
+    color: white;
+    font-size: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .lightbox-trigger:hover {
+    background: white;
+    color: #ff6900;
+    transform: scale(1.1);
+  }
+</style>

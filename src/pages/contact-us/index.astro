@@ -1,0 +1,227 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageBanner from '../../components/PageBanner.astro';
+import { siteData } from '../../data/siteData';
+
+const settings = siteData.settings;
+---
+
+<Layout title="Contact Us - Renovex Construction and Architecture">
+  <PageBanner title="Contact Us" activePage="Contact Us" />
+
+  <section class="contact-area">
+    <div class="container">
+      <div class="row">
+        <!-- Contact Info Col -->
+        <div class="col-lg-5 col-12 mb-5 mb-lg-0">
+          <div class="contact-info-card">
+            <span class="sub-heading">Contact Details</span>
+            <h2 class="main-heading text-white">Let's build something great together</h2>
+            <p class="contact-desc-text">Reach out to our experts to get an architectural plan, structural guidance, or a project cost estimate.</p>
+
+            <div class="contact-methods mt-5">
+              <div class="method-item">
+                <div class="method-icon"><i class="fa-solid fa-location-dot"></i></div>
+                <div class="method-text">
+                  <h4>Our Office:</h4>
+                  <p>{settings.address}</p>
+                </div>
+              </div>
+              <div class="method-item">
+                <div class="method-icon"><i class="fa-solid fa-phone"></i></div>
+                <div class="method-text">
+                  <h4>Phone Number:</h4>
+                  <p><a href={`tel:${settings.phone}`}>{settings.phone}</a></p>
+                </div>
+              </div>
+              <div class="method-item">
+                <div class="method-icon"><i class="fa-solid fa-envelope"></i></div>
+                <div class="method-text">
+                  <h4>Email Address:</h4>
+                  <p><a href={`mailto:${settings.email}`}>{settings.email}</a></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Col -->
+        <div class="col-lg-7 col-12 ps-lg-5">
+          <div class="contact-form-box">
+            <h3 class="form-title">Send Us A Message</h3>
+            <form class="contact-form" onsubmit="event.preventDefault()">
+              <div class="row">
+                <div class="col-md-6 col-12 mb-4">
+                  <input type="text" placeholder="First Name*" required />
+                </div>
+                <div class="col-md-6 col-12 mb-4">
+                  <input type="text" placeholder="Last Name*" required />
+                </div>
+                <div class="col-md-6 col-12 mb-4">
+                  <input type="email" placeholder="Email Address*" required />
+                </div>
+                <div class="col-md-6 col-12 mb-4">
+                  <input type="tel" placeholder="Phone Number*" required />
+                </div>
+                <div class="col-12 mb-4">
+                  <textarea placeholder="Write Your Message here..." rows="6" required></textarea>
+                </div>
+                <div class="col-12">
+                  <button type="submit" class="btn-submit-form">
+                    <span>Submit Message</span>
+                    <i class="fa-solid fa-arrow-right-long"></i>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .contact-area {
+    padding: 100px 0;
+    background: #090d16;
+    color: white;
+  }
+
+  .contact-info-card {
+    background: #151c28;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 45px;
+    border-radius: 20px;
+    height: 100%;
+  }
+
+  .sub-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    color: #ff6900;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    display: block;
+    margin-bottom: 15px;
+  }
+
+  .main-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 38px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 25px;
+  }
+
+  .contact-desc-text {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+  }
+
+  .contact-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .method-item {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .method-icon {
+    font-size: 24px;
+    color: #ff6900;
+  }
+
+  .method-text h4 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    margin: 0 0 5px 0;
+  }
+
+  .method-text p {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+  }
+
+  .method-text a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .method-text a:hover {
+    color: #ff6900;
+  }
+
+  /* Form Styling */
+  .contact-form-box {
+    background: #151c28;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 45px;
+    border-radius: 20px;
+  }
+
+  .form-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 35px;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 15px 20px;
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+    outline: none;
+    transition: all 0.3s ease;
+  }
+
+  .contact-form input:focus,
+  .contact-form textarea:focus {
+    border-color: #ff6900;
+  }
+
+  .btn-submit-form {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #ff6900;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 30px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn-submit-form i {
+    transition: transform 0.3s ease;
+  }
+
+  .btn-submit-form:hover {
+    background: white;
+    color: #1a1a1a;
+  }
+
+  .btn-submit-form:hover i {
+    transform: translateX(5px);
+  }
+</style>

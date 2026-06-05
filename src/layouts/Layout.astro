@@ -157,5 +157,18 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site || 'https://aycuae.p
       var theme_vars = {"theme_uri": ""};
     </script>
     <script is:inline src="/js/function.js"></script>
+    <script is:inline>
+      // Failsafe to hide preloader after 1 second
+      setTimeout(function() {
+        var preloader = document.querySelector('.theme-preloader');
+        if (preloader && preloader.style.display !== 'none') {
+          preloader.style.transition = 'opacity 0.5s ease';
+          preloader.style.opacity = '0';
+          setTimeout(function() {
+            preloader.style.display = 'none';
+          }, 500);
+        }
+      }, 1000);
+    </script>
   </body>
 </html>

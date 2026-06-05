@@ -10,16 +10,20 @@ const { PUBLIC_SANITY_PROJECT_ID, PUBLIC_SANITY_DATASET, SANITY_TOKEN } = loadEn
   ''
 );
 
+const projectId = PUBLIC_SANITY_PROJECT_ID || process.env.PUBLIC_SANITY_PROJECT_ID || 'dummy-project-id';
+const dataset = PUBLIC_SANITY_DATASET || process.env.PUBLIC_SANITY_DATASET || 'production';
+const token = SANITY_TOKEN || process.env.SANITY_TOKEN;
+
 // https://astro.build/config
 export default defineConfig({
   integrations: [
     react(),
     sanity({
-      projectId: PUBLIC_SANITY_PROJECT_ID || 'dummy-project-id',
-      dataset: PUBLIC_SANITY_DATASET || 'production',
+      projectId,
+      dataset,
       studioBasePath: '/admin',
       useCdn: false,
-      token: SANITY_TOKEN || process.env.SANITY_TOKEN,
+      token,
     }),
   ],
 });

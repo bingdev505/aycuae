@@ -1,4 +1,5 @@
 ---
+import { querySanity, urlFor } from '../utils/sanity';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
@@ -8,10 +9,29 @@ interface Props {
   description?: string;
 }
 
+const seoQuery = `*[_type == "siteSettings"][0]{
+  siteTitle,
+  metaDescription,
+  metaKeywords,
+  ogImage
+}`;
+
+const defaultSeo = {
+  siteTitle: 'ConstX | Premium Construction, Renovation & Building Contractor',
+  metaDescription: 'ConstX is a premium, modern construction, renovation, and building contractor offering high-quality structural and design solutions.',
+  metaKeywords: 'construction, renovation, builder, architect, design, contractor, engineering',
+  ogImage: null
+};
+
+const seo = await querySanity(seoQuery, defaultSeo);
+
 const { 
-  title = "ConstX | Construction, Building & Renovation Contractor", 
-  description = "A premium, modern construction, renovation, and building contractor website template." 
+  title = seo.siteTitle || defaultSeo.siteTitle, 
+  description = seo.metaDescription || defaultSeo.metaDescription 
 } = Astro.props;
+
+const ogImageUrl = seo.ogImage ? urlFor(seo.ogImage) : 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1200&h=630&q=80';
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site || 'https://aycuae.pages.dev');
 ---
 
 <!DOCTYPE html>
@@ -19,11 +39,32 @@ const {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
     <meta name="description" content={description} />
+    <meta name="keywords" content={seo.metaKeywords || defaultSeo.metaKeywords} />
+    <link rel="canonical" href={canonicalUrl.href} />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl.href} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageUrl} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalUrl.href} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={ogImageUrl} />
+
+    <!-- Favicons -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
-    <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
     
     <!-- Swiper CSS (CDN) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />

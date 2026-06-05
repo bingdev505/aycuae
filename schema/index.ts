@@ -19,6 +19,10 @@ export const siteSettings = defineType({
     defineField({ name: 'footerLogo', title: 'Footer Logo', type: 'image', options: { hotspot: true } }),
     defineField({ name: 'footerAbout', title: 'Footer About Text', type: 'text' }),
     defineField({ name: 'footerGallery', title: 'Footer Gallery Images', type: 'array', of: [{ type: 'image' }] }),
+    // SEO Fields
+    defineField({ name: 'metaDescription', title: 'Meta Description (SEO)', type: 'text', description: 'A brief summary of your site for search engines' }),
+    defineField({ name: 'metaKeywords', title: 'Meta Keywords (SEO)', type: 'string', description: 'Comma-separated keywords for search engines' }),
+    defineField({ name: 'ogImage', title: 'Open Graph Image (Social Sharing)', type: 'image', description: 'Image shown when sharing the site on Facebook/Twitter' }),
   ],
 });
 

@@ -17,7 +17,7 @@ export function urlFor(source: any) {
 // Fallback helper to return default mock data if Sanity query fails or returns empty
 export async function querySanity<T>(query: string, fallbacks: T): Promise<T> {
   try {
-    const data = await client.fetch(query);
+    const data = await client.fetch(query, {}, { perspective: 'previewDrafts' });
     if (!data || (Array.isArray(data) && data.length === 0)) {
       return fallbacks;
     }

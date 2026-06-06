@@ -2,6 +2,7 @@
 import { siteData } from '../data/siteData';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { VisualEditing } from '@sanity/astro/visual-editing';
 
 interface Props {
   title?: string;
@@ -105,5 +106,6 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site || 'https://aycuae.p
         }
       }, 1000);
     </script>
+    <VisualEditing />
   </body>
 </html>

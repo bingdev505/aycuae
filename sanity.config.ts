@@ -32,7 +32,7 @@ export default defineConfig({
       previewUrl: {
         origin: typeof window !== 'undefined' 
           ? window.location.origin 
-          : 'http://localhost:4321',
+          : 'http://localhost:4323',
       },
     }),
   ],

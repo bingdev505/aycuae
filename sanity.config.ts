@@ -1,10 +1,11 @@
 import { defineConfig } from 'sanity';
 import { structureTool } from 'sanity/structure';
+import { presentationTool } from 'sanity/presentation';
 import { schemaTypes } from './schema';
 
 export default defineConfig({
   name: 'default',
-  title: 'ConstX Contractor Portal',
+  title: 'Renovex Portal',
 
   projectId: 'lup7v9pz',
   dataset: 'production',
@@ -25,7 +26,16 @@ export default defineConfig({
     ]
   },
 
-  plugins: [structureTool()],
+  plugins: [
+    structureTool(),
+    presentationTool({
+      previewUrl: {
+        origin: typeof window !== 'undefined' 
+          ? window.location.origin 
+          : 'http://localhost:4321',
+      },
+    }),
+  ],
 
   schema: {
     types: schemaTypes,

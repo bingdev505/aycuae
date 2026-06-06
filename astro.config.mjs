@@ -14,6 +14,12 @@ const projectId = PUBLIC_SANITY_PROJECT_ID || process.env.PUBLIC_SANITY_PROJECT_
 const dataset = PUBLIC_SANITY_DATASET || process.env.PUBLIC_SANITY_DATASET || 'production';
 const token = SANITY_TOKEN || process.env.SANITY_TOKEN;
 
+console.log('--- Astro Config Debug ---');
+console.log('ProjectId:', projectId);
+console.log('Dataset:', dataset);
+console.log('Token Loaded:', !!token);
+console.log('--------------------------');
+
 // https://astro.build/config
 export default defineConfig({
   integrations: [
@@ -30,4 +36,11 @@ export default defineConfig({
       },
     }),
   ],
+  vite: {
+    resolve: {
+      alias: {
+        lodash: 'lodash-es',
+      },
+    },
+  },
 });

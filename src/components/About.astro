@@ -1,7 +1,20 @@
 ---
 import { siteData } from '../data/siteData';
+import { querySanity, urlFor } from '../utils/sanity';
 
-const about = siteData.about;
+const rawAbout = await querySanity(`*[_type == "aboutSection"][0]`, siteData.about);
+
+const about = {
+  badgeTitle: rawAbout.badgeTitle || siteData.about.badgeTitle,
+  badgeSubtitle: rawAbout.badgeSubtitle || siteData.about.badgeSubtitle,
+  title: rawAbout.title || siteData.about.title,
+  description: rawAbout.description || siteData.about.description,
+  bullets: rawAbout.featuresList || siteData.about.bullets,
+  youtubeUrl: rawAbout.youtubeUrl || siteData.about.youtubeUrl,
+  image: rawAbout.image ? (typeof rawAbout.image === 'string' ? rawAbout.image : urlFor(rawAbout.image)) : siteData.about.image,
+  estimateBox: rawAbout.estimateBox || siteData.about.estimateBox,
+};
+
 const est = about.estimateBox;
 ---
 

@@ -1,7 +1,21 @@
 ---
 import { siteData } from '../data/siteData';
+import { querySanity, urlFor } from '../utils/sanity';
 
-const hero = siteData.hero;
+// Query Sanity for the hero document, fall back to static data if not found/empty
+const rawHero = await querySanity(`*[_type == "heroSlide"][0]`, siteData.hero);
+
+// Build hero object resolving Sanity image fields
+const hero = {
+  subtitle: rawHero.subtitle || siteData.hero.subtitle,
+  title: rawHero.title || siteData.hero.title,
+  description: rawHero.description || siteData.hero.description,
+  buttonText: rawHero.buttonText || siteData.hero.buttonText,
+  buttonUrl: rawHero.buttonUrl || siteData.hero.buttonUrl,
+  youtubeUrl: rawHero.youtubeUrl || siteData.hero.youtubeUrl,
+  bgImage: rawHero.bgImage ? (typeof rawHero.bgImage === 'string' ? rawHero.bgImage : urlFor(rawHero.bgImage)) : siteData.hero.bgImage,
+};
+
 const bgUrl = hero.bgImage;
 ---
 

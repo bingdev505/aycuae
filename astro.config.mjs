@@ -24,6 +24,10 @@ export default defineConfig({
       studioBasePath: '/admin',
       useCdn: false,
       token,
+      stega: {
+        enabled: true,
+        studioUrl: '/admin',
+      },
     }),
   ],
 });

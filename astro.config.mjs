@@ -42,5 +42,12 @@ export default defineConfig({
         lodash: 'lodash-es',
       },
     },
+    optimizeDeps: {
+      include: [
+        'react',
+        'react-dom',
+        'react/compiler-runtime',
+      ],
+    },
   },
 });

@@ -9,9 +9,11 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "generate-types": "wrangler types"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^13.6.1",
     "@astrojs/react": "^5.0.7",
     "@sanity/astro": "^3.4.0",
     "@sanity/presentation": "^2.0.0",
@@ -22,6 +24,10 @@
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "sanity": "^5.30.0",
-    "styled-components": "^6.4.2"
+    "styled-components": "^6.4.2",
+    "wrangler": "^4.98.0"
+  },
+  "overrides": {
+    "vite": "^7"
   }
 }

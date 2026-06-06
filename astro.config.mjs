@@ -4,6 +4,8 @@ import react from '@astrojs/react';
 import sanity from '@sanity/astro';
 import { loadEnv } from 'vite';
 
+import cloudflare from '@astrojs/cloudflare';
+
 const { PUBLIC_SANITY_PROJECT_ID, PUBLIC_SANITY_DATASET, SANITY_TOKEN } = loadEnv(
   process.env.NODE_ENV || 'development',
   process.cwd(),
@@ -36,6 +38,7 @@ export default defineConfig({
       },
     }),
   ],
+
   vite: {
     resolve: {
       alias: {
@@ -50,4 +53,7 @@ export default defineConfig({
       ],
     },
   },
+
+  adapter: cloudflare(),
+  output: 'server',
 });
